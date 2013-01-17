@@ -1,0 +1,10 @@
+.logon 153.64.80.9/dbc, dbc
+.export report file=objs.out
+.set rtitle 'objs'
+.set format off
+.set width 65531
+select tablename,tablekind from dbc.tables where databasename='hadoop' order by createtimestamp desc;
+.set format off
+.export reset
+.logoff
+.exit

@@ -1,0 +1,2 @@
+             2  Type2                           Initialization and cost parameters for Type 2 formulas.  Since IO and Bynet costing still use Legacy formulas, IO and Network parameters are the same as Legacy, but with different ConstId values. 
+             1  Legacy                          Traditional (V2R6 & prior releases) cost values for legacy optimizer cost formulas. These use the traditional values and formula in determining query plan costs. 

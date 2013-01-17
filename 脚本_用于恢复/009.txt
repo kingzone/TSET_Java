@@ -1,0 +1,32 @@
+.logon 153.64.80.9/dbc, dbc
+database hadoop;
+.defaults
+.export report file=009.out
+.set format off
+.heading '009'
+.sidetitles off
+.set rtitle '009'
+.set width 65531
+
+* select RequestText from dbc.tables where DatabaseName='hadoop' order by CreateTimeStamp;
+*SELECT t2.*  FROM TABLE (MonitorPhysicalConfig()) AS t2;
+*SELECT t2.*  FROM TABLE (MonitorvirtualConfig()) AS t2;
+*select * from SystemFE.Opt_RAS_Table;
+*select * from SystemFE.Opt_Cost_Table;
+*select * from SystemFE.Opt_DBSCtl_Table;
+
+-- the next view is from the following 2 tables
+*SELECT * from DBC.CostProfiles_v;
+*select * FROM DBC.CostProfileTypes;
+*select * from DBC.CostProfiles;
+
+-- the next view is from the following 3 tables
+-- select * from DBC.CostProfileValues_v;
+*select * from DBC.CostProfiles;
+select * from DBC.ConstantDefs;
+--select * from DBC.ConstantValues;
+
+.set format off
+.export reset
+.logoff
+.exit

@@ -1,0 +1,2024 @@
+<TSETInfoTables>
+
+<metaDB id="001" name="CostProfiles">
+  <table id="0001" name="DBC.CostProfiles">
+    <column id="0001001">
+	  <columnName>ProfileId</columnName>
+	  <columnType>INTEGER</columnType>
+	</column>
+	<column id="0001002">
+      <columnName>ProfileName</columnName>
+      <columnType>CHAR(30)</columnType>
+    </column>
+	<column id="0001003">
+      <columnName>ProfileTypeId</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+    <column id="0001004">
+      <columnName>ProfileCat</columnName>
+      <columnType>CHAR(1)</columnType>
+    </column>
+    <column id="0001005">
+      <columnName>ProfileDesc</columnName>
+      <columnType>VARCHAR(2048)</columnType>
+    </column>
+  </table>
+  <table id="0002" name="DBC.CostProfileTypes">
+    <column id="0002001">
+      <columnName>ProfileTypeId</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+    <column id="0002002">
+      <columnName>ProfileTypeName</columnName>
+      <columnType>CHAR(30)</columnType>
+    </column>
+    <column id="0002003">
+      <columnName>ProfileTypeDesc</columnName>
+      <columnType>VARCHAR(2048)</columnType>
+    </column>
+  </table>
+  <table id="0003" name="DBC.ConstantDefs">
+    <column id="0003001">
+      <columnName>ProfileTypeId</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+    <column id="0003002">
+      <columnName>ConstId</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0003003">
+      <columnName>ConstName</columnName>
+      <columnType>CHAR(64)</columnType>
+    </column>
+	<column id="0003004">
+      <columnName>ConstCat</columnName>
+      <columnType>CHAR(1)</columnType>
+    </column>
+	<column id="0003005">
+      <columnName>ConstVal</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0003006">
+      <columnName>ConstString</columnName>
+      <columnType>VARCHAR(2048)</columnType>
+    </column>
+    <column id="0003007">
+      <columnName>ConstDesc</columnName>
+      <columnType>VARCHAR(2048)</columnType>
+    </column>
+  </table>
+  <table id="0004" name="DBC.ConstantValues">
+    <column id="0004001">
+      <columnName>ProfileId</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+    <column id="0004002">
+      <columnName>ProfileCat</columnName>
+      <columnType>CHAR(1)</columnType>
+    </column>
+	<column id="0004003">
+      <columnName>ConstId</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0004004">
+      <columnName>ConstVal</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+    <column id="0004005">
+      <columnName>ConstString</columnName>
+      <columnType>VARCHAR(2048)</columnType>
+    </column>
+  </table>
+</metaDB>
+
+<metaDB id="002" name="CostParameters">
+  <table id="0001" name="SystemFE.Opt_Cost_Table">
+    <column id="0001001">
+      <columnName>Systemname</columnName>
+      <columnType>CHAR(30)</columnType>
+    </column>
+	<column id="0001002">
+      <columnName>Systemfamily</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001003">
+      <columnName>TimeStamp1</columnName>
+      <columnType>CHAR(32)</columnType>
+    </column>
+	<column id="0001004">
+      <columnName>Version</columnName>
+      <columnType>CHAR(16)</columnType>
+    </column>
+	<column id="0001005">
+      <columnName>Comments</columnName>
+      <columnType>VARCHAR(256)</columnType>
+    </column>
+	<column id="0001006">
+      <columnName>OptAmpCnt</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001007">
+      <columnName>AmpCnt</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001008">
+      <columnName>IFPCnt</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001009">
+      <columnName>LookAHeadFlag</columnName>
+      <columnType>BYTEINT</columnType>
+    </column>
+	<column id="0001010">
+      <columnName>LookAHead</columnName>
+      <columnType>BYTEINT</columnType>
+    </column>
+	<column id="0001011">
+      <columnName>OptSysCpuWeight</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001012">
+      <columnName>OptSysDiskWeight</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001013">
+      <columnName>OptSysNetWeight</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001014">
+      <columnName>CPUWeight</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001015">
+      <columnName>DiskWeight</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001016">
+      <columnName>NetWeight</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001017">
+      <columnName>DAScale</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001018">
+      <columnName>CPUscale</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001019">
+      <columnName>OptRowAccessCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001020">
+      <columnName>OptOutPutRowCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001021">
+      <columnName>OptRedistributeCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001022">
+      <columnName>OptSynonymCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001023">
+      <columnName>OptRowIDCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001024">
+      <columnName>OptBMANDRowCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001025">
+      <columnName>OptBMWriteReadRowCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001026">
+      <columnName>OptBitCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001027">
+      <columnName>OptCharFieldCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001028">
+      <columnName>OptNumFieldCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001029">
+      <columnName>OptOvhdOfRowCompCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001030">
+      <columnName>OptTableBlockSize</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001031">
+      <columnName>OptSpoolBlockSize</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001032">
+      <columnName>OptIndexBlockSize</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001033">
+      <columnName>OptDiskReadDelayTableScan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001034">
+      <columnName>OptDiskReadDelaySpoolScan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001035">
+      <columnName>OptDiskReadDelayIndexScan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001036">
+      <columnName>OptDiskWriteDelayTableScan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001037">
+      <columnName>OptDiskWriteDelaySpoolScan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001038">
+      <columnName>OptDiskWriteDelayIndexScan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001039">
+      <columnName>OptDiskReadThruputTableScan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001040">
+      <columnName>OptDiskReadThruputSpoolScan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001041">
+      <columnName>OptDiskReadThruputIndexScan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001042">
+      <columnName>OptDiskWriteThruputTablescan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001043">
+      <columnName>OptDiskWriteThruputSpoolscan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001044">
+      <columnName>OptDiskWriteThruputIndexscan</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001045">
+      <columnName>OptByNetRedCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001046">
+      <columnName>OptByNetRedOvhd</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001047">
+      <columnName>OptBynetDupCost</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001048">
+      <columnName>OptBynetDupOvhd</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001049">
+      <columnName>OptCpusperPMA</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001050">
+      <columnName>OptVampsPerPMA</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001051">
+      <columnName>OptVampsPerCPU</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001052">
+      <columnName>OptPMAsPerDiskArray</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001053">
+      <columnName>OptTotalPMAs</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001054">
+      <columnName>Optcpuweight</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001055">
+      <columnName>Optdiskweight</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001056">
+      <columnName>Optnetweight</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001057">
+      <columnName>Optbmmaxsize</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001058">
+      <columnName>Optmaxnjrows</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001059">
+      <columnName>Optminimizeallamps</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001060">
+      <columnName>Optnopseudohashlocks</columnName>
+      <columnType>BYTEINT</columnType>
+    </column>
+	<column id="0001061">
+      <columnName>Freespacepercent</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001062">
+      <columnName>Permdbsize</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001063">
+      <columnName>Workdbsize</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001064">
+      <columnName>Dictionarycachesize</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001065">
+      <columnName>Maxparsetreesegs</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001066">
+      <columnName>Stepssegmentsize</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001067">
+      <columnName>Runningosversion</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001068">
+      <columnName>Pkgname</columnName>
+      <columnType>CHAR(16)</columnType>
+    </column>
+	<column id="0001069">
+      <columnName>Numvprt1</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001070">
+      <columnName>Numvprt2</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001071">
+      <columnName>Numvprt3</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001072">
+      <columnName>Numvprt4</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001073">
+      <columnName>Numvprt5</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001074">
+      <columnName>Numvprt6</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001075">
+      <columnName>Numvprt7</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001076">
+      <columnName>Numvprt8</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001077">
+      <columnName>Numvprt9</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001078">
+      <columnName>Numvprt10</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001079">
+      <columnName>Numvprt11</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001080">
+      <columnName>Numvprt12</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001081">
+      <columnName>Numvprt13</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001082">
+      <columnName>Numvprt14</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001083">
+      <columnName>Numvprt15</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001084">
+      <columnName>Numvprt16</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001085">
+      <columnName>Vprtsperpma1_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001086">
+      <columnName>Vprtsperpma1_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001087">
+      <columnName>Vprtsperpma1_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001088">
+      <columnName>Vprtsperpma2_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001089">
+      <columnName>Vprtsperpma2_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001090">
+      <columnName>Vprtsperpma2_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001091">
+      <columnName>Vprtsperpma3_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001092">
+      <columnName>Vprtsperpma3_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001093">
+      <columnName>Vprtsperpma3_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001094">
+      <columnName>Vprtsperpma4_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001095">
+      <columnName>Vprtsperpma4_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001096">
+      <columnName>Vprtsperpma4_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001097">
+      <columnName>Vprtsperpma5_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001098">
+      <columnName>Vprtsperpma5_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001099">
+      <columnName>Vprtsperpma5_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001100">
+      <columnName>Vprtsperpma6_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001101">
+      <columnName>Vprtsperpma6_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001102">
+      <columnName>Vprtsperpma6_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001103">
+      <columnName>Vprtsperpma7_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001104">
+      <columnName>Vprtsperpma7_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001105">
+      <columnName>Vprtsperpma7_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001106">
+      <columnName>Vprtsperpma8_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001107">
+      <columnName>Vprtsperpma8_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001108">
+      <columnName>Vprtsperpma8_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001109">
+      <columnName>Vprtsperpma9_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001110">
+      <columnName>Vprtsperpma9_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001111">
+      <columnName>Vprtsperpma9_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001112">
+      <columnName>Vprtsperpma10_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001113">
+      <columnName>Vprtsperpma10_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001114">
+      <columnName>Vprtsperpma10_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001115">
+      <columnName>Vprtsperpma11_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001116">
+      <columnName>Vprtsperpma11_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001117">
+      <columnName>Vprtsperpma11_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001118">
+      <columnName>Vprtsperpma12_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001119">
+      <columnName>Vprtsperpma12_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001120">
+      <columnName>Vprtsperpma12_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001121">
+      <columnName>Vprtsperpma13_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001122">
+      <columnName>Vprtsperpma13_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001123">
+      <columnName>Vprtsperpma13_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001124">
+      <columnName>Vprtsperpma14_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001125">
+      <columnName>Vprtsperpma14_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001126">
+      <columnName>Vprtsperpma14_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001127">
+      <columnName>Vprtsperpma15_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001128">
+      <columnName>Vprtsperpma15_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001129">
+      <columnName>Vprtsperpma15_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001130">
+      <columnName>Vprtsperpma16_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001131">
+      <columnName>Vprtsperpma16_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001132">
+      <columnName>Vprtsperpma16_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001133">
+      <columnName>Processmempervprt1_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001134">
+      <columnName>Processmempervprt1_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001135">
+      <columnName>Processmempervprt1_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001136">
+      <columnName>Processmempervprt2_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001137">
+      <columnName>Processmempervprt2_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001138">
+      <columnName>Processmempervprt2_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001139">
+      <columnName>Processmempervprt3_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001140">
+      <columnName>Processmempervprt3_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001141">
+      <columnName>Processmempervprt3_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001142">
+      <columnName>Processmempervprt4_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001143">
+      <columnName>Processmempervprt4_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001144">
+      <columnName>Processmempervprt4_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001145">
+      <columnName>Processmempervprt5_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001146">
+      <columnName>Processmempervprt5_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001147">
+      <columnName>Processmempervprt5_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001148">
+      <columnName>Processmempervprt6_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001149">
+      <columnName>Processmempervprt6_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001150">
+      <columnName>Processmempervprt6_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001151">
+      <columnName>Processmempervprt7_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001152">
+      <columnName>Processmempervprt7_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001153">
+      <columnName>Processmempervprt7_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001154">
+      <columnName>Processmempervprt8_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001155">
+      <columnName>Processmempervprt8_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001156">
+      <columnName>Processmempervprt8_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001157">
+      <columnName>Processmempervprt9_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001158">
+      <columnName>Processmempervprt9_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001159">
+      <columnName>Processmempervprt9_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001160">
+      <columnName>Processmempervprt10_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001161">
+      <columnName>Processmempervprt10_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001162">
+      <columnName>Processmempervprt10_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001163">
+      <columnName>Processmempervprt11_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001164">
+      <columnName>Processmempervprt11_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001165">
+      <columnName>Processmempervprt11_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001166">
+      <columnName>Processmempervprt12_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001167">
+      <columnName>Processmempervprt12_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001168">
+      <columnName>Processmempervprt12_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001169">
+      <columnName>Processmempervprt13_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001170">
+      <columnName>Processmempervprt13_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001171">
+      <columnName>Processmempervprt13_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001172">
+      <columnName>Processmempervprt14_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001173">
+      <columnName>Processmempervprt14_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001174">
+      <columnName>Processmempervprt14_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001175">
+      <columnName>Processmempervprt15_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001176">
+      <columnName>Processmempervprt15_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001177">
+      <columnName>Processmempervprt15_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001178">
+      <columnName>Processmempervprt16_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001179">
+      <columnName>Processmempervprt16_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001180">
+      <columnName>Processmempervprt16_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001181">
+      <columnName>Cpusperpma_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001182">
+      <columnName>Cpusperpma_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001183">
+      <columnName>Cpusperpma_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001184">
+      <columnName>Numpmas</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001185">
+      <columnName>Mipspercpu_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001186">
+      <columnName>Mipspercpu_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001187">
+      <columnName>Mipspercpu_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001188">
+      <columnName>Pmasperclique_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001189">
+      <columnName>Pmasperclique_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001190">
+      <columnName>Pmasperclique_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001191">
+      <columnName>Cpuspare1</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001192">
+      <columnName>Cpuspare2</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001193">
+      <columnName>Cpuspare3</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001194">
+      <columnName>Cpuspare4</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001195">
+      <columnName>Cpuspare5</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001196">
+      <columnName>Cpuspare6</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001197">
+      <columnName>Cpuspare7</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001198">
+      <columnName>Cpuspare8</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001199">
+      <columnName>Cpuspare9</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001200">
+      <columnName>Cpuspare10</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001201">
+      <columnName>Cpuspare11</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001202">
+      <columnName>Cpuspare12</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001203">
+      <columnName>Cpuspare13</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001204">
+      <columnName>Cpuspare14</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001205">
+      <columnName>Cpuspare15</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001206">
+      <columnName>Cpuspare16</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001207">
+      <columnName>Arraysperclique_max</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001208">
+      <columnName>Arraysperclique_min</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001209">
+      <columnName>Arraysperclique_avg</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001210">
+      <columnName>DiskArrayAccesSpeeds</columnName>
+      <columnType>VARBYTE(512)</columnType>
+    </column>
+	<column id="0001211">
+      <columnName>DiskAccesSpeeds</columnName>
+      <columnType>VARBYTE(512)</columnType>
+    </column>
+	<column id="0001212">
+      <columnName>NetworkAccesSpeeds</columnName>
+      <columnType>VARBYTE(512)</columnType>
+    </column>
+	<column id="0001213">
+      <columnName>TosSysLocalHardware</columnName>
+      <columnType>VARBYTE(256)</columnType>
+    </column>
+	<column id="0001214">
+      <columnName>OptDefaultConstants</columnName>
+      <columnType>VARBYTE(256)</columnType>
+    </column>
+	<column id="0001215">
+      <columnName>OptDefaultValues</columnName>
+      <columnType>VARBYTE(256)</columnType>
+    </column>
+	<column id="0001216">
+      <columnName>ProfileName</columnName>
+      <columnType>CHAR(30)</columnType>
+    </column>
+	<column id="0001217">
+      <columnName>ProfileType</columnName>
+      <columnType>CHAR(30)</columnType>
+    </column>
+    <column id="0001218">
+      <columnName>ProfileCat</columnName>
+      <columnType>CHAR(1)</columnType>
+    </column>
+  </table>
+  <table id="0002" name="SystemFE.Opt_DBSCtl_Table">
+    <column id="0002001">
+      <columnName>SystemName</columnName>
+      <columnType>CHAR(30)</columnType>
+    </column>
+	<column id="0002002">
+      <columnName>GroupName</columnName>
+      <columnType>CHAR(1)</columnType>
+    </column>
+	<column id="0002003">
+      <columnName>FieldNum</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+    <column id="0002004">
+      <columnName>FieldName</columnName>
+      <columnType>CHAR(256)</columnType>
+    </column>
+	<column id="0002005">
+      <columnName>FieldValue</columnName>
+      <columnType>CHAR(256)</columnType>
+    </column>
+    <column id="0002006">
+      <columnName>Emulate</columnName>
+      <columnType>CHAR(1)</columnType>
+    </column>
+  </table>
+</metaDB>
+
+<metaDB id="003" name="RAS">
+  <table id="0001" name="SystemFE.Opt_RAS_Table">
+    <column id="0001001">
+      <columnName>SystemName</columnName>
+      <columnType>CHAR(30)</columnType>
+    </column>
+	<column id="0001002">
+      <columnName>DBName</columnName>
+      <columnType>CHAR(30)</columnType>
+    </column>
+	<column id="0001003">
+      <columnName>TableName</columnName>
+      <columnType>CHAR(30)</columnType>
+    </column>
+	<column id="0001004">
+      <columnName>CreateTimeStamp</columnName>
+      <columnType>CHAR(32)</columnType>
+    </column>
+	<column id="0001005">
+      <columnName>NumRows</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001006">
+      <columnName>NumIndexes</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001007">
+      <columnName>MinRowLen</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001008">
+      <columnName>MaxRowLen</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001009">
+      <columnName>NoOfDistinctPIValues</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001010">
+      <columnName>Confidence</columnName>
+      <columnType>BYTEINT</columnType>
+    </column>
+    <!--
+	<column id="0001011">
+      <columnName>TotalLogRowCntWithDel</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001012">
+      <columnName>TotalDeletedRowCnt</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+    -->
+	<column id="0001013">
+      <columnName>Fields0</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001014">
+      <columnName>Count0</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001015">
+      <columnName>RowSize0</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001016">
+      <columnName>Fields1</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001017">
+      <columnName>Count1</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001018">
+      <columnName>RowSize1</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001019">
+      <columnName>Fields2</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001020">
+      <columnName>Count2</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001021">
+      <columnName>RowSize2</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001022">
+      <columnName>Fields3</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001023">
+      <columnName>Count3</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001024">
+      <columnName>RowSize3</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001025">
+      <columnName>Fields4</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001026">
+      <columnName>Count4</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001027">
+      <columnName>RowSize4</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001028">
+      <columnName>Fields5</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001029">
+      <columnName>Count5</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001030">
+      <columnName>RowSize5</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001031">
+      <columnName>Fields6</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001032">
+      <columnName>Count6</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001033">
+      <columnName>RowSize6</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001034">
+      <columnName>Fields7</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001035">
+      <columnName>Count7</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001036">
+      <columnName>RowSize7</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001037">
+      <columnName>Fields8</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001038">
+      <columnName>Count8</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001039">
+      <columnName>RowSize8</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001040">
+      <columnName>Fields9</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001041">
+      <columnName>Count9</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001042">
+      <columnName>RowSize9</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001043">
+      <columnName>Fields10</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001044">
+      <columnName>Count10</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001045">
+      <columnName>RowSize10</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001046">
+      <columnName>Fields11</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001047">
+      <columnName>Count11</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001048">
+      <columnName>RowSize11</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001049">
+      <columnName>Fields12</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001050">
+      <columnName>Count12</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001051">
+      <columnName>RowSize12</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001052">
+      <columnName>Fields13</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001053">
+      <columnName>Count13</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001054">
+      <columnName>RowSize13</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001055">
+      <columnName>Fields14</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001056">
+      <columnName>Count14</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001057">
+      <columnName>RowSize14</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001058">
+      <columnName>Fields15</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001059">
+      <columnName>Count15</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001060">
+      <columnName>RowSize15</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001061">
+      <columnName>Fields16</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001062">
+      <columnName>Count16</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001063">
+      <columnName>RowSize16</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001064">
+      <columnName>Fields17</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001065">
+      <columnName>Count17</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001066">
+      <columnName>RowSize17</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001067">
+      <columnName>Fields18</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001068">
+      <columnName>Count18</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001069">
+      <columnName>RowSize18</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001070">
+      <columnName>Fields19</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001071">
+      <columnName>Count19</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001072">
+      <columnName>RowSize19</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001073">
+      <columnName>Fields20</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001074">
+      <columnName>Count20</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001075">
+      <columnName>RowSize20</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001076">
+      <columnName>Fields21</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001077">
+      <columnName>Count21</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001078">
+      <columnName>RowSize21</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001079">
+      <columnName>Fields22</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001080">
+      <columnName>Count22</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001081">
+      <columnName>RowSize22</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001082">
+      <columnName>Fields23</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001083">
+      <columnName>Count23</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001084">
+      <columnName>RowSize23</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001085">
+      <columnName>Fields24</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001086">
+      <columnName>Count24</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001087">
+      <columnName>RowSize24</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001088">
+      <columnName>Fields25</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001089">
+      <columnName>Count25</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001090">
+      <columnName>RowSize25</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001091">
+      <columnName>Fields26</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001092">
+      <columnName>Count26</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001093">
+      <columnName>RowSize26</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001094">
+      <columnName>Fields27</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001095">
+      <columnName>Count27</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001096">
+      <columnName>RowSize27</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001097">
+      <columnName>Fields28</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001098">
+      <columnName>Count28</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001099">
+      <columnName>RowSize28</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001100">
+      <columnName>Fields29</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001101">
+      <columnName>Count29</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001102">
+      <columnName>RowSize29</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001103">
+      <columnName>Fields30</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001104">
+      <columnName>Count30</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001105">
+      <columnName>RowSize30</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001106">
+      <columnName>Fields31</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001107">
+      <columnName>Count31</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001108">
+      <columnName>RowSize31</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001109">
+      <columnName>Fields32</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001110">
+      <columnName>Count32</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001111">
+      <columnName>RowSize32</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001112">
+      <columnName>Fields33</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001113">
+      <columnName>Count33</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001114">
+      <columnName>RowSize33</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001115">
+      <columnName>Fields34</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001116">
+      <columnName>Count34</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001117">
+      <columnName>RowSize34</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001118">
+      <columnName>Fields35</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001119">
+      <columnName>Count35</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001120">
+      <columnName>RowSize35</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001121">
+      <columnName>Fields36</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001122">
+      <columnName>Count36</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001123">
+      <columnName>RowSize36</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001124">
+      <columnName>Fields37</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001125">
+      <columnName>Count37</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001126">
+      <columnName>RowSize37</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001127">
+      <columnName>Fields38</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001128">
+      <columnName>Count38</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001129">
+      <columnName>RowSize38</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001130">
+      <columnName>Fields39</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001131">
+      <columnName>Count39</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001132">
+      <columnName>RowSize39</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001133">
+      <columnName>Fields40</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001134">
+      <columnName>Count40</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001135">
+      <columnName>RowSize40</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001136">
+      <columnName>Fields41</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001137">
+      <columnName>Count41</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001138">
+      <columnName>RowSize41</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001139">
+      <columnName>Fields42</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001140">
+      <columnName>Count42</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001141">
+      <columnName>RowSize42</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001142">
+      <columnName>Fields43</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001143">
+      <columnName>Count43</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001144">
+      <columnName>RowSize43</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001145">
+      <columnName>Fields44</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001146">
+      <columnName>Count44</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001147">
+      <columnName>RowSize44</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001148">
+      <columnName>Fields45</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001149">
+      <columnName>Count45</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001150">
+      <columnName>RowSize45</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001151">
+      <columnName>Fields46</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001152">
+      <columnName>Count46</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001153">
+      <columnName>RowSize46</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001154">
+      <columnName>Fields47</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001155">
+      <columnName>Count47</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001156">
+      <columnName>RowSize47</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001157">
+      <columnName>Fields48</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001158">
+      <columnName>Count48</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001159">
+      <columnName>RowSize48</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001160">
+      <columnName>Fields49</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001161">
+      <columnName>Count49</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001162">
+      <columnName>RowSize49</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001163">
+      <columnName>Fields50</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001164">
+      <columnName>Count50</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001165">
+      <columnName>RowSize50</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001166">
+      <columnName>Fields51</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001167">
+      <columnName>Count51</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001168">
+      <columnName>RowSize51</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001169">
+      <columnName>Fields52</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001170">
+      <columnName>Count52</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001171">
+      <columnName>RowSize52</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001172">
+      <columnName>Fields53</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001173">
+      <columnName>Count53</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001174">
+      <columnName>RowSize53</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001175">
+      <columnName>Fields54</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001176">
+      <columnName>Count54</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001177">
+      <columnName>RowSize54</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001178">
+      <columnName>Fields55</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001179">
+      <columnName>Count55</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001180">
+      <columnName>RowSize55</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001181">
+      <columnName>Fields56</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001182">
+      <columnName>Count56</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001183">
+      <columnName>RowSize56</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001184">
+      <columnName>Fields57</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001185">
+      <columnName>Count57</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001186">
+      <columnName>RowSize57</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001187">
+      <columnName>Fields58</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001188">
+      <columnName>Count58</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001189">
+      <columnName>RowSize58</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001190">
+      <columnName>Fields59</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001191">
+      <columnName>Count59</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001192">
+      <columnName>RowSize59</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001193">
+      <columnName>Fields60</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001194">
+      <columnName>Count60</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001195">
+      <columnName>RowSize60</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001196">
+      <columnName>Fields61</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001197">
+      <columnName>Count61</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001198">
+      <columnName>RowSize61</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001199">
+      <columnName>Fields62</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001200">
+      <columnName>Count62</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001201">
+      <columnName>RowSize62</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001202">
+      <columnName>Fields63</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001203">
+      <columnName>Count63</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001204">
+      <columnName>RowSize63</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001205">
+      <columnName>Fields64</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001206">
+      <columnName>Count64</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001207">
+      <columnName>RowSize64</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001208">
+      <columnName>Fields65</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001209">
+      <columnName>Count65</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001210">
+      <columnName>RowSize65</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001211">
+      <columnName>Fields66</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001212">
+      <columnName>Count66</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001213">
+      <columnName>RowSize66</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001214">
+      <columnName>Fields67</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001215">
+      <columnName>Count67</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001216">
+      <columnName>RowSize67</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001217">
+      <columnName>Fields68</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001218">
+      <columnName>Count68</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001219">
+      <columnName>RowSize68</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001220">
+      <columnName>Fields69</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001221">
+      <columnName>Count69</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001222">
+      <columnName>RowSize69</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001223">
+      <columnName>Fields70</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001224">
+      <columnName>Count70</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001225">
+      <columnName>RowSize70</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001226">
+      <columnName>Fields71</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001227">
+      <columnName>Count71</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001228">
+      <columnName>RowSize71</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001229">
+      <columnName>Fields72</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001230">
+      <columnName>Count72</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001231">
+      <columnName>RowSize72</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001232">
+      <columnName>Fields73</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001233">
+      <columnName>Count73</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001234">
+      <columnName>RowSize73</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001235">
+      <columnName>Fields74</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001236">
+      <columnName>Count74</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001237">
+      <columnName>RowSize74</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001238">
+      <columnName>Fields75</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001239">
+      <columnName>Count75</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001240">
+      <columnName>RowSize75</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001241">
+      <columnName>Fields76</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001242">
+      <columnName>Count76</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001243">
+      <columnName>RowSize76</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001244">
+      <columnName>Fields77</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001245">
+      <columnName>Count77</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001246">
+      <columnName>RowSize77</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001247">
+      <columnName>Fields78</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001248">
+      <columnName>Count78</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001249">
+      <columnName>RowSize78</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001250">
+      <columnName>Fields79</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001251">
+      <columnName>Count79</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+	<column id="0001252">
+      <columnName>RowSize79</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+	<column id="0001253">
+      <columnName>Fields80</columnName>
+      <columnType>SMALLINT</columnType>
+    </column>
+	<column id="0001254">
+      <columnName>Count80</columnName>
+      <columnType>FLOAT</columnType>
+    </column>
+    <column id="0001255">
+      <columnName>RowSize80</columnName>
+      <columnType>INTEGER</columnType>
+    </column>
+  </table>
+</metaDB>
+
+</TSETInfoTables>

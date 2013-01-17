@@ -1,0 +1,20 @@
+<DBConfig>
+  <DB>
+    <URL>jdbc:teradata://153.64.28.192/</URL>
+    <DATABASE>king.test</DATABASE>
+    <CHARSET>ASCII</CHARSET>
+    <TMODE>TERA</TMODE>
+    <USERNAME>dbc</USERNAME>
+    <PASSWORD>dbc</PASSWORD>
+  </DB>
+  <!--
+  <DB>
+    <URL>jdbc:teradata://153.64.80.9/</URL>
+    <DATABASE>hadoop</DATABASE>
+    <CHARSET>ASCII</CHARSET>
+    <TMODE>TERA</TMODE>
+    <USERNAME>dbc</USERNAME>
+    <PASSWORD>dbc</PASSWORD>
+  </DB>
+  -->
+</DBConfig>
