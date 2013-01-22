@@ -22,7 +22,6 @@ public class ImporterRun {
 		
 		logger.info("Import success.");
 		long endtime = System.currentTimeMillis();
-		//System.out.println("Time Elapsed: " + (endtime-starttime) + " ms.");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		logger.info("Start Time: " + sdf.format(starttime));
 		logger.info("End Time: " + sdf.format(endtime));
