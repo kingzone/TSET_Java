@@ -1,6 +1,6 @@
 package com.teradata.qaf.tset.common;
 
-public interface IAuthority {
+public interface Authority {
 
 	void check();
 	void grant();

@@ -1,6 +1,6 @@
 package com.teradata.qaf.tset.common;
 
-public interface ITransferable {
+public interface Transferable {
 
 	public static final int EXPORT = 0;
 	public static final int IMPORT = 1;

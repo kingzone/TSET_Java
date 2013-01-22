@@ -11,14 +11,14 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.teradata.qaf.tset.common.DBConn;
-import com.teradata.qaf.tset.common.IAuthority;
+import com.teradata.qaf.tset.common.Authority;
 import com.teradata.qaf.tset.pojo.MetaDB;
 import com.teradata.qaf.tset.pojo.TSETInfoTables;
 import com.teradata.qaf.tset.pojo.Table;
 
-public class ExpAuthority implements IAuthority {
+public class ExpAuthorityImpl implements Authority {
 
-	private static final Logger logger = Logger.getLogger(ExpAuthority.class.getName());
+	private static final Logger logger = Logger.getLogger(ExpAuthorityImpl.class.getName());
 	
 	private String databaseName;
 	private TSETInfoTables tsetInfoTables;
@@ -27,11 +27,11 @@ public class ExpAuthority implements IAuthority {
 	
 	private List<String> needGrant;
 	
-	public ExpAuthority() {
+	public ExpAuthorityImpl() {
 		this.needGrant = new ArrayList<String>();
 	}
 	
-	public ExpAuthority(Connection conn, TSETInfoTables tsetInfoTables, String databaseName, String userName) {
+	public ExpAuthorityImpl(Connection conn, TSETInfoTables tsetInfoTables, String databaseName, String userName) {
 		this();
 		this.conn = conn;
 		this.databaseName = databaseName;

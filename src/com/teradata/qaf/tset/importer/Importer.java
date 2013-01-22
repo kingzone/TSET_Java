@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.teradata.qaf.tset.common.DBConn;
-import com.teradata.qaf.tset.common.ITransferable;
+import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.common.impl.DDLTransfer;
 import com.teradata.qaf.tset.common.impl.RecordTransfer;
 import com.teradata.qaf.tset.pojo.MetaDB;
@@ -28,7 +28,7 @@ private TSETInfoTables tsetInfoTables;
 	}
 	
 	// 
-	public List<ITransferable> getImportTransferable() {
+	public List<Transferable> getImportTransferable() {
 		return null;
 	}
 	
@@ -39,7 +39,7 @@ private TSETInfoTables tsetInfoTables;
 		// UnZip the TSETInfoTables directory
 		
 		// check Authority
-		ImpAuthority impAu = new ImpAuthority(conn, tsetInfoTables, DBConn.getDatabase(), DBConn.getUsername());
+		ImpAuthorityImpl impAu = new ImpAuthorityImpl(conn, tsetInfoTables, DBConn.getDatabase(), DBConn.getUsername());
 		impAu.check();
 		impAu.grant();
 		

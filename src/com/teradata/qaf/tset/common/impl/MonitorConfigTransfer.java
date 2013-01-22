@@ -7,10 +7,10 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-import com.teradata.qaf.tset.common.ITransferable;
+import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.utils.TSETCSVWriter;
 
-public class MonitorConfigTransfer implements ITransferable {
+public class MonitorConfigTransfer implements Transferable {
 
 	private static Logger logger = Logger.getLogger(MonitorConfigTransfer.class.getName());
 	private Connection conn = null;

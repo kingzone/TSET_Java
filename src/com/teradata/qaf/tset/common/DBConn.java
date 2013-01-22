@@ -26,7 +26,6 @@ public class DBConn {
 	private static Connection conn = null;
 //	private static String url = "jdbc:teradata://153.64.80.9/database=hadoop,charset=ASCII,TMODE=TERA";
 //	private static String url = "jdbc:teradata://153.64.28.192/database=hadoop,charset=ASCII,TMODE=TERA";
-//	private static String url = "jdbc:teradata://153.64.80.9/hadoop";
 	private static String url = "jdbc:teradata://153.64.80.9/";
 	private static String database = "";// if unspecified, export all database
 	private static String charset = "ASCII";

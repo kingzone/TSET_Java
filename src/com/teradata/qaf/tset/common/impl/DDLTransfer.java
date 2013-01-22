@@ -12,11 +12,11 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.teradata.qaf.tset.common.DBConn;
-import com.teradata.qaf.tset.common.ITransferable;
+import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.utils.SQLReader;
 import com.teradata.qaf.tset.utils.SQLWriter;
 
-public class DDLTransfer implements ITransferable {
+public class DDLTransfer implements Transferable {
 
 	private static Logger logger = Logger.getLogger(DDLTransfer.class.getName());
 	private Connection conn;

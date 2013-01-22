@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.teradata.qaf.tset.common.DBConn;
-import com.teradata.qaf.tset.common.ITransferable;
+import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.common.impl.DDLTransfer;
 import com.teradata.qaf.tset.common.impl.MonitorConfigTransfer;
 import com.teradata.qaf.tset.common.impl.RecordTransfer;
@@ -29,7 +29,7 @@ public class Exporter {
 	}
 	
 	// 
-	public List<ITransferable> getExportTransferable() {
+	public List<Transferable> getExportTransferable() {
 		return null;
 	}
 	
@@ -49,7 +49,7 @@ public class Exporter {
 		Connection conn = DBConn.getConnection(dbConfig);
 		
 		// check Authority
-		ExpAuthority expAu = new ExpAuthority(conn, tsetInfoTables, DBConn.getDatabase(), DBConn.getUsername());
+		ExpAuthorityImpl expAu = new ExpAuthorityImpl(conn, tsetInfoTables, DBConn.getDatabase(), DBConn.getUsername());
 		expAu.check();
 		expAu.grant();
 		

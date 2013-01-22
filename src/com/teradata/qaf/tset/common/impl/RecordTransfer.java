@@ -12,14 +12,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.teradata.qaf.tset.common.ITransferable;
+import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.pojo.Column;
 import com.teradata.qaf.tset.pojo.MetaDB;
 import com.teradata.qaf.tset.pojo.Table;
 import com.teradata.qaf.tset.utils.TSETCSVReader;
 import com.teradata.qaf.tset.utils.TSETCSVWriter;
 
-public class RecordTransfer implements ITransferable {
+public class RecordTransfer implements Transferable {
 	private static Logger logger = Logger.getLogger(RecordTransfer.class.getName());
 	private MetaDB metaDB;
 	private Connection conn;

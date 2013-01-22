@@ -11,9 +11,25 @@ public class CommonConfig {
 			"where databasename='" + DBConn.getDatabase() + 
 			"' order by createtimestamp";
 	
+	// Config files path
+	public static String DBConfig() {
+		return "DBConfig.xml";
+	}
+	public static String DBConfig_IMP() {
+		return "DBConfig_IMP.xml";
+	}
+	public static String ConfFile_schema(String version) {
+		return "ConfFile_schema_" + version + ".xml";
+	}
+	
+	// Connection String
+	public static String connectionString(String url, String database, String charset, String tmode) { 
+		return url + "database=\"" + database + "\", charset=" + charset + ", tmode=" + tmode;
+	}
+	
 	// Path to store the exported files
 	public static String path() {
-		return DBConn.getDatabase() + "_" + DBConn.getUsername() + "TSETInfoTables/";
+		return DBConn.getDatabase() + "_" + DBConn.getUsername() + "/TSETInfoTables/";
 	}
 	
 	// SQL statement to query Access Right(Authority)
