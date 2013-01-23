@@ -11,6 +11,11 @@ public class CommonConfig {
 			"where databasename='" + DBConn.getDatabase() + 
 			"' order by createtimestamp";
 	
+	// show table SQL statement
+	public static String sqlShowTable(String tableName) {
+		return "show table " + tableName;
+	}
+	
 	// Config files path
 	public static String DBConfig() {
 		return "DBConfig.xml";
