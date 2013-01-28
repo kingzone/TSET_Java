@@ -1,5 +1,6 @@
 <DBConfig>
     <URL>jdbc:teradata://153.64.28.192/</URL>
+    <!--<URL>jdbc:teradata://153.64.80.9.2/</URL>-->
     <DATABASE>king.test</DATABASE>
     <CHARSET>ASCII</CHARSET>
     <TMODE>TERA</TMODE>
