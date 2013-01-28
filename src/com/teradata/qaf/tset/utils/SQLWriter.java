@@ -1,5 +1,6 @@
 package com.teradata.qaf.tset.utils;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,9 +19,10 @@ public class SQLWriter extends BaseWriter{
 		//File f = new File(ddlFileName);
 		File f = (new SQLWriter()).openFile(ddlFileName);
 		FileWriter fw = null;
-		
+		BufferedWriter bw = null;
 		try {
 			fw = new FileWriter(f);
+			bw = new BufferedWriter(fw);
 			Iterator<String> it = sqlList.iterator();
 			while(it.hasNext()) {
 				
@@ -28,9 +30,11 @@ public class SQLWriter extends BaseWriter{
 				
 				String tempSql = it.next();
 				if (tempSql.endsWith(";")) {
-					fw.append(tempSql + "\r\n");
+					//fw.append(tempSql + "\r\n");
+					bw.append(tempSql + "\r\n");
 				} else {
-					fw.append(tempSql + ";\r\n");
+					//fw.append(tempSql + ";\r\n");
+					bw.append(tempSql + ";\r\n");
 				}
 				
 			}
