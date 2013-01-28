@@ -190,5 +190,13 @@ public class DBConn {
 	public static void setUsername(String username) {
 		DBConn.username = username;
 	}
+
+	public static String getUrl() {
+		return url;
+	}
+
+	public static void setUrl(String url) {
+		DBConn.url = url;
+	}
 	
 }

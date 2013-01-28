@@ -46,7 +46,8 @@ public class CommonConfig {
 	
 	// Path to store the exported files
 	public static String path() {
-		return DBConn.getDatabase() + "_" + DBConn.getUsername() + "/TSETInfoTables/";
+		return DBConn.getUrl().split("/")[2] + "_" + DBConn.getDatabase() + 
+				"_" + DBConn.getUsername() + "/TSETInfoTables/";
 	}
 	
 	public static String MonitorPhysicalConfig = "MonitorPhysicalConfig.csv";
