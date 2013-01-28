@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.common.DBConn;
 import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.utils.SQLReader;
@@ -36,20 +36,15 @@ public class DDLTransfer implements Transferable {
 	
 	// generate SQL statement for exporting
 	public String generateSQL(String database) {
-		String sql = "select requesttext from dbc.tables order by createtimestamp";
-		if (database!=null && !database.equals("")) {
-			sql = "select requesttext from dbc.tables where databasename='"+database+"' order by createtimestamp";
-		}
+//		String sql = "select requesttext from dbc.tables order by createtimestamp";
+		String sql = CommonConfig.sqlQueryDDL(database);;
+//		if (database!=null && !database.equals("")) {
+//			sql = "select requesttext from dbc.tables where databasename='"+database+"' order by createtimestamp";
+//		}
 		return sql;
 	}
 	
-	// generate import SQL Statements from the exported DDL file
-	public List<String> generateImportSQL(String sql) {
-		List<String> sqlList = new ArrayList<String>();
-		// BUG: if ; exsits in a column name
-		sqlList = Arrays.asList(sql.split(";"));
-		return sqlList;
-	}
+	
 
 	@Override
 	public void doExport() {
@@ -89,8 +84,7 @@ public class DDLTransfer implements Transferable {
 		boolean res = false;
 		try {
 			//conn.setAutoCommit(false);
-			//String sql = SQLReader.readSQL("TSETInfoTables/" + DBConn.getDatabase() + ".sql");
-			//List<String> sqlList = this.generateImportSQL(sql);
+			
 			List<String> sqlList = SQLReader.readSQL("TSETInfoTables/" + DBConn.getDatabase() + ".sql");
 			Iterator<String> it = sqlList.iterator();
 			int countAll = 1;
