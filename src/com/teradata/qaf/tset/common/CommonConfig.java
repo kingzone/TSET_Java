@@ -48,23 +48,23 @@ public class CommonConfig {
 	// SQL statement to grant select of table to user
 	//public static String sqlGrantSelect = "GRANT RETRIEVE/SELECT ON '" +
 	public static String sqlGrantSelect(String tableName, String userName){ 
-		return "GRANT SELECT ON '" + tableName + "' to '" + userName + "';";
+		return "GRANT SELECT ON " + tableName + " to " + userName + " with grant option;";
 	}
 	
 	// SQL statement to revoke select of table to user
 	//public static String sqlRevokeSelect = "REVOKE RETRIEVE/SELECT ON '" +
 	public static String sqlRevokeSelect(String tableName, String userName) { 
-		return "REVOKE SELECT ON '" + tableName + "' to '" + userName + "';";
+		return "REVOKE SELECT ON " + tableName + "' from " + userName + ";";
 	}
 	
 	// SQL statement to grant insert of table to user
 	public static String sqlGrantInsert(String tableName, String userName) { 
-		return "GRANT INSERT ON '" + tableName + "' to '" + userName + "';";
+		return "GRANT INSERT ON " + tableName + " to " + userName + " with grant option;";
 	}
 	
 	//SQL statement to revoke insert of table to user
 	public static String sqlRevokeInsert(String tableName, String userName) { 
-		return "REVOKE INSERT ON '" + tableName + "' to '" + userName + "';";
+		return "REVOKE INSERT ON " + tableName + " from " + userName + ";";
 	}
 	
 	// SQL statement to export metaDBs
