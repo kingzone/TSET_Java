@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.common.DBConn;
 import com.teradata.qaf.tset.common.Authority;
 import com.teradata.qaf.tset.pojo.MetaDB;
@@ -53,7 +54,7 @@ private static final Logger logger = Logger.getLogger(ImpAuthorityImpl.class.get
 					Iterator<Table> itTable = metaDB.getTableList().iterator();
 					while(itTable.hasNext()) {
 						String tableName = itTable.next().getName();
-						String sql = "select accessright from dbc.allrights where databasename='"+tableName.split("\\.")[0]+"' and username='"+this.userName+"' and tablename='"+tableName.split("\\.")[1]+"'";
+						String sql = CommonConfig.sqlQueryAccessright(tableName, this.userName);
 						logger.info(sql);
 						ps = conn.prepareStatement(sql);
 						rs = ps.executeQuery();
@@ -109,7 +110,8 @@ private static final Logger logger = Logger.getLogger(ImpAuthorityImpl.class.get
 		while(it.hasNext()) {
 			String tableName = it.next();
 //			String sql = "GRANT INSERT ON '"+this.databaseName+"'.'"+tableName+"' to '"+this.userName+"';";
-			String sql = "GRANT INSERT ON '"+tableName+"' to '"+this.userName+"';";
+//			String sql = "GRANT INSERT ON '"+tableName+"' to '"+this.userName+"';";
+			String sql = CommonConfig.sqlGrantInsert(tableName, this.userName);
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.execute();
@@ -147,7 +149,8 @@ private static final Logger logger = Logger.getLogger(ImpAuthorityImpl.class.get
 		while(it.hasNext()) {
 			String tableName = it.next();
 //			String sql = "REVOKE INSERT ON '"+this.databaseName+"'.'"+tableName+"' to '"+this.userName+"';";
-			String sql = "REVOKE INSERT ON '"+tableName+"' to '"+this.userName+"';";
+//			String sql = "REVOKE INSERT ON '"+tableName+"' to '"+this.userName+"';";
+			String sql = CommonConfig.sqlRevokeInsert(tableName, this.userName);
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.execute();

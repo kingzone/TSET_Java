@@ -3,6 +3,7 @@ package com.teradata.qaf.tset.exporter;
 import java.sql.Connection;
 import java.util.List;
 
+import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.common.DBConn;
 import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.common.impl.DDLTransfer;
@@ -21,7 +22,7 @@ public class Exporter {
 	//private List<TSETInfoTables> tsetInfoTablesList;
 	
 	// initialize 
-	public void initialize(String ConfigFileName, String outputFileName) {
+	public void initialize(String ConfigFileName) {
 		
 		XMLReader xmlReader = new XMLReader(ConfigFileName);
 		tsetInfoTables = xmlReader.parseXml();
@@ -35,7 +36,8 @@ public class Exporter {
 	
 	// export all
 	public void doTDExportAll() {
-		List<DBConfig> dbConfigList = DBConfigReader.initDBConfig("DBConfig.xml");
+		//List<DBConfig> dbConfigList = DBConfigReader.initDBConfig("DBConfig.xml");
+		List<DBConfig> dbConfigList = DBConfigReader.initDBConfig(CommonConfig.DBConfig());
 		for (DBConfig dbConfig : dbConfigList) {
 			this.doTDExport(dbConfig);
 		}

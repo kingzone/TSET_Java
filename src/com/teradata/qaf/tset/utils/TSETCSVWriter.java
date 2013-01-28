@@ -12,7 +12,8 @@ import au.com.bytecode.opencsv.CSVWriter;
 public class TSETCSVWriter extends BaseWriter {
 
 	private static Logger logger = Logger.getLogger(TSETCSVWriter.class.getName());
-	private String fileName = "TSETInfoTables/TSETInfoTables.csv";
+	//private String fileName = "TSETInfoTables/TSETInfoTables.csv";
+	private String fileName;
 	
 	public TSETCSVWriter() {
 		

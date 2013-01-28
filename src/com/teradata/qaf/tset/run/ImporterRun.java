@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 
 import org.apache.log4j.Logger;
 
+import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.importer.Importer;
 
 public class ImporterRun {
@@ -17,7 +18,8 @@ public class ImporterRun {
 		long starttime = System.currentTimeMillis();
 		Importer importer = new Importer();
 		//importer.initialize("ConfFile_schema.xml", "input.csv");
-		importer.initialize("ConfFile_schema_13.10.xml", "input.csv");
+		//importer.initialize("ConfFile_schema_13.10.xml");
+		importer.initialize(CommonConfig.ConfFile_schema("14.00"));
 		importer.doTDImport();
 		
 		logger.info("Import success.");

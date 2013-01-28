@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.pojo.Column;
 import com.teradata.qaf.tset.pojo.MetaDB;
@@ -42,13 +43,16 @@ public class RecordTransfer implements Transferable {
 	public String generateSQL(Table table, int flag) {
 		String sql = "";
 		if(flag == EXPORT) {
-			sql = "select * from " + table.getName() + ";";
+//			sql = "select * from " + table.getName() + ";";
+			sql = CommonConfig.sqlQueryMetaDB(table);
 		} else if(flag == IMPORT) {
 			String cols = "?";
 			for(int i=1; i<table.getColumnList().size(); i++) {
 				cols += ", ?";
 			}
-			sql = "insert into " + table.getName() + " values(" + cols + ")";
+//			sql = "insert into " + table.getName() + " values(" + cols + ")";
+			sql = CommonConfig.sqlInsertMetaDB(table, cols);
+					
 		} else {
 			logger.error("Unknown flag!");
 		}
@@ -62,11 +66,15 @@ public class RecordTransfer implements Transferable {
 		// 1.generate SQL; 2.execute SQL and write the results into csv files
 		try {
 			for(Table table : metaDB.getTableList()) {
-				String sql = "select * from " + table.getName() + ";";
+//				String sql = "select * from " + table.getName() + ";";
+				String sql = this.generateSQL(table, EXPORT);
+						
 				logger.info(sql);
 				ps = conn.prepareStatement(sql);
 				rs = ps.executeQuery();
-				TSETCSVWriter csvWriter = new TSETCSVWriter("TSETInfoTables/" + metaDB.getName() + "/" + table.getName() + ".csv");
+				//TSETCSVWriter csvWriter = new TSETCSVWriter("TSETInfoTables/" + metaDB.getName() + "/" + table.getName() + ".csv");
+				TSETCSVWriter csvWriter = new TSETCSVWriter(CommonConfig.path() + 
+						metaDB.getName() + "/" + table.getName() + ".csv");
 				csvWriter.writeCSV(rs);
 				logger.info("execute sql : " + sql);
 				
@@ -104,7 +112,9 @@ public class RecordTransfer implements Transferable {
 			//if (!table.getName().equals("DBC.CostProfiles")) continue;
 			// read the exported files
 			TSETCSVReader csvReader = new TSETCSVReader();
-			List<String[]> recordList = csvReader.readCSV("TSETInfoTables/" + metaDB.getName() + "/" + table.getName() + ".csv");
+			//List<String[]> recordList = csvReader.readCSV("TSETInfoTables/" + metaDB.getName() + "/" + table.getName() + ".csv");
+			List<String[]> recordList = csvReader.readCSV(CommonConfig.path() + 
+					metaDB.getName() + "/" + table.getName() + ".csv");
 			
 			// generate SQL statements
 			String sql = this.generateSQL(table, IMPORT);

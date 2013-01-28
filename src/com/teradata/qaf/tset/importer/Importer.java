@@ -20,7 +20,7 @@ private TSETInfoTables tsetInfoTables;
 	private static final Logger logger = Logger.getLogger(Importer.class.getName());
 
 	// initialize 
-	public void initialize(String ConfigFileName, String inputFileName) {
+	public void initialize(String ConfigFileName) {
 		
 		XMLReader xmlReader = new XMLReader(ConfigFileName);
 		tsetInfoTables = xmlReader.parseXml();

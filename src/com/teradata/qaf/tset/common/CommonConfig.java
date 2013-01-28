@@ -1,15 +1,27 @@
 package com.teradata.qaf.tset.common;
 
-import com.teradata.qaf.tset.pojo.TSETInfoTables;
+import com.teradata.qaf.tset.pojo.Table;
 
 public class CommonConfig {
 
 	// 
 	//public static final String PATH = "TSETInfoTables/";
 	// SQL statement to query DDL
-	public static String sqlQueryDDL = "select requesttext from dbc.tables " +
-			"where databasename='" + DBConn.getDatabase() + 
-			"' order by createtimestamp";
+//	public static String sqlQueryDDL = "select requesttext from dbc.tables " +
+//			"where databasename='" + DBConn.getDatabase() + 
+//			"' order by createtimestamp";
+	
+	public static String sqlQueryDDL(String databaseName) {
+		String sqlQueryDDL;
+		if(databaseName.equals("")) {
+			sqlQueryDDL = "select requesttext from dbc.tables order by createtimestamp";
+		} else {
+			sqlQueryDDL = "select requesttext from dbc.tables " +
+					"where databasename='" + DBConn.getDatabase() + 
+					"' order by createtimestamp";
+		}
+		return sqlQueryDDL;
+	}
 	
 	// show table SQL statement
 	public static String sqlShowTable(String tableName) {
@@ -36,6 +48,9 @@ public class CommonConfig {
 	public static String path() {
 		return DBConn.getDatabase() + "_" + DBConn.getUsername() + "/TSETInfoTables/";
 	}
+	
+	public static String MonitorPhysicalConfig = "MonitorPhysicalConfig.csv";
+	public static String MonitorvirtualConfig = "MonitorvirtualConfig.csv";
 	
 	// SQL statement to query Access Right(Authority)
 	public static String sqlQueryAccessright(String tableName, String userName) {
@@ -67,13 +82,13 @@ public class CommonConfig {
 		return "REVOKE INSERT ON " + tableName + " from " + userName + ";";
 	}
 	
-	// SQL statement to export metaDBs
-	public static String sqlQueryMetaDB(TSETInfoTables table){ 
+	// SQL statement to export metaDBs' tables
+	public static String sqlQueryMetaDB(Table table){ 
 		return "select * from " + table.getName() + ";";
 	}
 	
-	// SQL statement to import metaDBs
-	public static String sqlInsertMetaDB(TSETInfoTables table, String cols){ 
+	// SQL statement to import metaDBs' tables
+	public static String sqlInsertMetaDB(Table table, String cols){ 
 		return "insert into " + table.getName() + " values(" + cols + ")";
 	}
 	

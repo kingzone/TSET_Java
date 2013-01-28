@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.common.DBConn;
 import com.teradata.qaf.tset.common.Authority;
 import com.teradata.qaf.tset.pojo.MetaDB;
@@ -52,10 +53,8 @@ public class ExpAuthorityImpl implements Authority {
 				if(!metaDB.getName().equalsIgnoreCase("CostProfiles")) {
 					Iterator<Table> itTable = metaDB.getTableList().iterator();
 					while(itTable.hasNext()) {
-//						String sql = "select accessright from dbc.allrights where databasename='"+this.databaseName+"' and username='"+this.userName+"' and tablename='"+itTable.next().getName()+"'";
-//						String sql = "select accessright from dbc.allrights where username='"+this.userName+"' and tablename='"+itTable.next().getName().split("\\.")[1]+"'";
 						String tableName = itTable.next().getName();
-						String sql = "select accessright from dbc.allrights where databasename='"+tableName.split("\\.")[0]+"' and username='"+this.userName+"' and tablename='"+tableName.split("\\.")[1]+"'";
+						String sql = CommonConfig.sqlQueryAccessright(tableName, this.userName);
 						logger.info(sql);
 						ps = conn.prepareStatement(sql);
 						rs = ps.executeQuery();
@@ -113,8 +112,7 @@ public class ExpAuthorityImpl implements Authority {
 		}
 		while(it.hasNext()) {
 			String tableName = it.next();
-//			String sql = "GRANT RETRIEVE/SELECT ON '"+this.databaseName+"'.'"+tableName+"' to '"+this.userName+"';";
-			String sql = "GRANT RETRIEVE/SELECT ON '"+tableName+"' to '"+this.userName+"';";
+			String sql = CommonConfig.sqlGrantSelect(tableName, this.userName);
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.execute();
@@ -160,8 +158,7 @@ public class ExpAuthorityImpl implements Authority {
 		
 		while(it.hasNext()) {
 			String tableName = it.next();
-//			String sql = "REVOKE RETRIEVE/SELECT ON '"+this.databaseName+"'.'"+tableName+"' to '"+this.userName+"';";
-			String sql = "REVOKE RETRIEVE/SELECT ON '"+tableName+"' to '"+this.userName+"';";
+			String sql = CommonConfig.sqlRevokeSelect(tableName, this.userName);
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.execute();

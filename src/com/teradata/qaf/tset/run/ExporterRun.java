@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 
 import org.apache.log4j.Logger;
 
+import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.exporter.Exporter;
 
 public class ExporterRun {
@@ -13,7 +14,8 @@ public class ExporterRun {
 	public static void main(String []args) {
 		long starttime = System.currentTimeMillis();
 		Exporter exporter = new Exporter();
-		exporter.initialize("ConfFile_schema.xml", "output.csv");
+		//exporter.initialize("ConfFile_schema.xml");
+		exporter.initialize(CommonConfig.ConfFile_schema("14.00"));
 		//exporter.doTDExport();
 		exporter.doTDExportAll();
 		

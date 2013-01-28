@@ -102,7 +102,8 @@ public class DBConn {
 		//initDBConfig("DBConfig.xml");
 		initDBConfig(dbConfig);
 		
-		String connStr = url + "database=\"" + database + "\",charset=" + charset + ",tmode=" + tmode;
+//		String connStr = url + "database=\"" + database + "\",charset=" + charset + ",tmode=" + tmode;
+		String connStr = CommonConfig.connectionString(url, database, charset, tmode);
 		logger.info(connStr);
 		try {
 			conn = DriverManager.getConnection(connStr, username, password);
@@ -131,7 +132,8 @@ public class DBConn {
 		//
 		initDBConfig("DBConfig.xml");
 		
-		String connStr = url + "database=\"" + database + "\",charset=" + charset + ",tmode=" + tmode;
+//		String connStr = url + "database=\"" + database + "\",charset=" + charset + ",tmode=" + tmode;
+		String connStr = CommonConfig.connectionString(url, database, charset, tmode);
 		logger.info(connStr);
 		try {
 			conn = DriverManager.getConnection(connStr, username, password);

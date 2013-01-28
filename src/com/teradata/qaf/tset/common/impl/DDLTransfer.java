@@ -62,7 +62,9 @@ public class DDLTransfer implements Transferable {
 			//rs.close();
 			//ps.close();
 			// can use multi-thread, fork a new thread to write file
-			SQLWriter.setFileName("TSETInfoTables/" + DBConn.getDatabase() + ".sql");
+//			SQLWriter.setFileName("TSETInfoTables/" + DBConn.getDatabase() + ".sql");
+			SQLWriter.setFileName(CommonConfig.path() + 
+					DBConn.getDatabase() + ".sql");
 			SQLWriter.writeSQL(sqlList);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -85,7 +87,9 @@ public class DDLTransfer implements Transferable {
 		try {
 			//conn.setAutoCommit(false);
 			
-			List<String> sqlList = SQLReader.readSQL("TSETInfoTables/" + DBConn.getDatabase() + ".sql");
+//			List<String> sqlList = SQLReader.readSQL("TSETInfoTables/" + DBConn.getDatabase() + ".sql");
+			List<String> sqlList = SQLReader.readSQL(CommonConfig.path() + 
+					DBConn.getDatabase() + ".sql");
 			Iterator<String> it = sqlList.iterator();
 			int countAll = 1;
 			conn.setAutoCommit(false);

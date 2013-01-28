@@ -11,12 +11,14 @@ import org.apache.log4j.Logger;
 public class SQLWriter extends BaseWriter{
 
 	private static Logger logger = Logger.getLogger(SQLWriter.class.getName());
-	private static String ddlFileName = "TSETInfoTables/ddl.sql";
+	//private static String ddlFileName = "TSETInfoTables/ddl.sql";
+	private static String ddlFileName;
 	
 	public static void writeSQL(List<String> sqlList) {
 		//File f = new File(ddlFileName);
 		File f = (new SQLWriter()).openFile(ddlFileName);
 		FileWriter fw = null;
+		
 		try {
 			fw = new FileWriter(f);
 			Iterator<String> it = sqlList.iterator();
