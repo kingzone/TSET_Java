@@ -159,7 +159,7 @@ public class XMLReader extends BaseReader {
 							// The CRLF character will be treated as a node, so using IF.
 							if (columnContentNode.hasChildNodes()) {
 								
-								System.out.println(columnContentNode.getNodeName() + ":" + columnContentNode.getTextContent());
+								//System.out.println(columnContentNode.getNodeName() + ":" + columnContentNode.getTextContent());
 								//System.out.println(m);
 								if (columnContentNode.getNodeName().equals("columnName")) {
 									column.setName(columnContentNode.getTextContent());
@@ -202,7 +202,7 @@ public class XMLReader extends BaseReader {
 
 	
 	private void parseColumnAttribute(Node columnNode, Column column) {
-		// TODO Auto-generated method stub
+		
 		NamedNodeMap attList = columnNode.getAttributes();
 		if(attList != null) {
 			for(int i=0; i<attList.getLength(); i++) {
@@ -219,7 +219,7 @@ public class XMLReader extends BaseReader {
 	}
 
 	private void parseTableAttribute(Node tableNode, Table table) {
-		// TODO Auto-generated method stub
+		
 		NamedNodeMap attList = tableNode.getAttributes();
 		if(attList != null) {
 			for(int i=0; i<attList.getLength(); i++) {
