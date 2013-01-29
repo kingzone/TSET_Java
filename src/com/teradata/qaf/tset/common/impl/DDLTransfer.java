@@ -47,7 +47,7 @@ public class DDLTransfer implements Transferable {
 	
 
 	@Override
-	public void doExport() {
+	public void doExport() throws Exception{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -69,12 +69,17 @@ public class DDLTransfer implements Transferable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
+			logger.error("ERROR while exporting DDLs, ROLLBACK automatically " +
+					"and handle the exception outside.");
+			throw new SQLException();
+			//System.exit(-1);
 		} finally {
 			try {
-				rs.close();
-				ps.close();
+				if(!rs.isClosed()) rs.close();
+				if(!ps.isClosed()) ps.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 			
 		}

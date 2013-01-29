@@ -28,12 +28,13 @@ public class ExpAuthorityImpl implements Authority {
 	
 	private List<String> needGrant;
 	
-	public ExpAuthorityImpl() {
-		this.needGrant = new ArrayList<String>();
-	}
+//	public ExpAuthorityImpl() {
+//		this.needGrant = new ArrayList<String>();
+//	}
 	
 	public ExpAuthorityImpl(Connection conn, TSETInfoTables tsetInfoTables, String databaseName, String userName) {
-		this();
+//		this();
+		this.needGrant = new ArrayList<String>();
 		this.conn = conn;
 		this.databaseName = databaseName;
 		this.tsetInfoTables = tsetInfoTables;
@@ -201,6 +202,14 @@ public class ExpAuthorityImpl implements Authority {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public List<String> getNeedGrant() {
+		return needGrant;
+	}
+
+	public void setNeedGrant(List<String> needGrant) {
+		this.needGrant = needGrant;
 	}
 
 }

@@ -15,7 +15,7 @@ public class SQLWriter extends BaseWriter{
 	//private static String ddlFileName = "TSETInfoTables/ddl.sql";
 	private static String ddlFileName;
 	
-	public static void writeSQL(List<String> sqlList) {
+	public static void writeSQL(List<String> sqlList) throws Exception{
 		//File f = new File(ddlFileName);
 		File f = (new SQLWriter()).openFile(ddlFileName);
 		FileWriter fw = null;
@@ -39,12 +39,20 @@ public class SQLWriter extends BaseWriter{
 				
 			}
 		} catch (IOException e) {
+			bw.close();
+			fw.close();
 			e.printStackTrace();
 			logger.error(e.getMessage());
+			logger.error("ERROR while writing exported DDL file(s), " +
+					"ROLLBACK automatically and handle the exception outside.");
+			throw new IOException();
 		} finally {
 			try {
-				fw.flush();
+				bw.flush();
+				bw.close();
+				//fw.flush();
 				fw.close();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 				logger.error(e.getMessage());

@@ -6,7 +6,7 @@ public interface Transferable {
 	public static final int IMPORT = 1;
 	
 	public String getGeneratedSQL();
-	public void doExport();
+	public void doExport() throws Exception;
 	public void doImport();
 	
 }

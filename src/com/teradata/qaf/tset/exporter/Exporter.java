@@ -3,6 +3,8 @@ package com.teradata.qaf.tset.exporter;
 import java.sql.Connection;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.common.DBConn;
 import com.teradata.qaf.tset.common.Transferable;
@@ -17,6 +19,8 @@ import com.teradata.qaf.tset.utils.XMLReader;
 
 public class Exporter {
 
+	private final Logger logger = Logger.getLogger(Exporter.class.getName());
+	
 	//private List<ITransferable> transferableList;
 	private TSETInfoTables tsetInfoTables;
 	//private List<TSETInfoTables> tsetInfoTablesList;
@@ -57,7 +61,17 @@ public class Exporter {
 		
 		// export DDL
 		DDLTransfer ddlTransfer = new DDLTransfer(conn);
-		ddlTransfer.doExport();
+		try {
+			ddlTransfer.doExport();
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			logger.error("ERROR while exporting DDLs, ROLLBACK automatically " +
+					"and EXIT the Application.");
+			ExpRollBackImpl expRollBack = new ExpRollBackImpl(expAu);
+			expRollBack.doRollBack();
+			System.exit(-1);
+		}
 		
 		// export CostProfiles, CostParameters, RAS
 		for(MetaDB metaDB : tsetInfoTables.getMetaDBList()) {
