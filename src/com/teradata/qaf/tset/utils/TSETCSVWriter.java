@@ -24,7 +24,7 @@ public class TSETCSVWriter extends BaseWriter {
 	}
 	
 	// should not be static, considering the support of multi-thread write file
-	public void writeCSV(ResultSet rs) {
+	public void writeCSV(ResultSet rs) throws Exception{
 		File f = super.openFile(fileName);
 		CSVWriter writer = null;
 		try {
@@ -34,6 +34,9 @@ public class TSETCSVWriter extends BaseWriter {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
+			logger.error("ERROR while writing exported metaDB file(s), " +
+					"ROLLBACK automatically and handle the exception outside.");
+			throw new IOException();
 		} finally {
 			try {
 				writer.close();

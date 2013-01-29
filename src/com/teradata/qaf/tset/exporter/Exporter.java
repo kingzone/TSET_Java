@@ -1,6 +1,7 @@
 package com.teradata.qaf.tset.exporter;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -64,7 +65,11 @@ public class Exporter {
 		try {
 			ddlTransfer.doExport();
 		} catch (Exception e) {
-			
+			try {
+				if(conn != null && !conn.isClosed()) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 			logger.error("ERROR while exporting DDLs, ROLLBACK automatically " +
 					"and EXIT the Application.");
@@ -74,12 +79,26 @@ public class Exporter {
 		}
 		
 		// export CostProfiles, CostParameters, RAS
-		for(MetaDB metaDB : tsetInfoTables.getMetaDBList()) {
-			// tackle tables of each metaDB
-			
-			RecordTransfer recordTransfer = new RecordTransfer(metaDB, conn);
-			recordTransfer.doExport();
-			
+		try {
+			for(MetaDB metaDB : tsetInfoTables.getMetaDBList()) {
+				// tackle tables of each metaDB
+				
+				RecordTransfer recordTransfer = new RecordTransfer(metaDB, conn);
+				recordTransfer.doExport();
+				
+			}
+		} catch (Exception e) {
+			try {
+				if(conn != null && !conn.isClosed()) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			logger.error("ERROR while exporting metaDBs, ROLLBACK automatically " +
+					"and EXIT the Application.");
+			ExpRollBackImpl expRollBack = new ExpRollBackImpl(expAu);
+			expRollBack.doRollBack();
+			System.exit(-1);
 		}
 		
 		//export physical/virtual config

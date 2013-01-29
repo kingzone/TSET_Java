@@ -60,7 +60,7 @@ public class RecordTransfer implements Transferable {
 	}
 
 	@Override
-	public void doExport() {
+	public void doExport() throws Exception{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		// 1.generate SQL; 2.execute SQL and write the results into csv files
@@ -83,15 +83,13 @@ public class RecordTransfer implements Transferable {
 			// zip the csv files to metaDB
 			
 			
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			logger.error(e.getMessage());
 			//logger.error(e.getStackTrace().toString());
 			e.printStackTrace();
-			try {
-				conn.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			logger.error("ERROR while exporting metaDBs, ROLLBACK automatically " +
+					"and handle the exception outside.");
+			throw new Exception();
 		} finally {
 			try {
 				rs.close();
