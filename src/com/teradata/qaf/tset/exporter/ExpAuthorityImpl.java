@@ -86,6 +86,9 @@ public class ExpAuthorityImpl implements Authority {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
+			// Exit if exception
+			logger.error("Check Export privileges ERROR, ROLLBACK automatically and Exit the application.");
+			System.exit(-1);
 		} finally {
 			try {
 				if(rs!=null) rs.close();
@@ -103,13 +106,8 @@ public class ExpAuthorityImpl implements Authority {
 		PreparedStatement ps = null;
 		Iterator<String> it = this.needGrant.iterator();
 		
-		// must grant in one transaction
-		try {
-			conn.setAutoCommit(false);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			logger.error(e1.getMessage());
-		}
+		
+		// cannot put DDL and DCL into one transaction, only DML can
 		while(it.hasNext()) {
 			String tableName = it.next();
 			String sql = CommonConfig.sqlGrantSelect(tableName, this.userName);
@@ -118,29 +116,26 @@ public class ExpAuthorityImpl implements Authority {
 				ps.execute();
 				logger.info(sql);
 			} catch (SQLException e) {
-				try {
-					conn.rollback();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				
 				e.printStackTrace();
 				logger.error(e.getMessage());
+				this.revoke();
+				
 				DBConn.closeConnection(conn);
+				
+				logger.error("Grant Export privileges ERROR, ROLLBACK automatically and Exit the application.");
+				System.exit(-1);
 			} finally {
 				try {
-					ps.close();
+					if(!ps.isClosed()) ps.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
+					logger.error(e.getMessage());
 				}
 			}
 			
 		}
-		try {
-			conn.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
-		}
+		
 	}
 
 	@Override
@@ -149,12 +144,6 @@ public class ExpAuthorityImpl implements Authority {
 		PreparedStatement ps = null;
 		Iterator<String> it = this.needGrant.iterator();
 		
-		try {
-			conn.setAutoCommit(false);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			logger.error(e1.getMessage());
-		}
 		
 		while(it.hasNext()) {
 			String tableName = it.next();
@@ -164,28 +153,21 @@ public class ExpAuthorityImpl implements Authority {
 				ps.execute();
 				logger.info(sql);
 			} catch (SQLException e) {
-				try {
-					conn.rollback();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				
 				e.printStackTrace();
 				logger.error(e.getMessage());
+				
 				DBConn.closeConnection(conn);
+				logger.error("Revoke Export privileges ERROR, ROLLBACK automatically and Exit the application.");
+				System.exit(-1);
 			} finally {
 				try {
 					if(ps!=null) ps.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
+					logger.error(e.getMessage());
 				}
 			}
-			
-		}
-		try {
-			conn.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
 		}
 	}
 
