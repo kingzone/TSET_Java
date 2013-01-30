@@ -103,7 +103,22 @@ public class Exporter {
 		
 		//export physical/virtual config
 		MonitorConfigTransfer monitorConfigTransfer = new MonitorConfigTransfer(conn); 
-		monitorConfigTransfer.doExport();
+		try {
+			monitorConfigTransfer.doExport();
+		} catch (Exception e) {
+			
+			try {
+				if(conn != null && !conn.isClosed()) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			logger.error("ERROR while exporting MonitorXXXConfig, " +
+					"ROLLBACK automatically and EXIT the Application.");
+			ExpRollBackImpl expRollBack = new ExpRollBackImpl(expAu);
+			expRollBack.doRollBack();
+			System.exit(-1);
+		}
 		
 		expAu.revoke();
 		

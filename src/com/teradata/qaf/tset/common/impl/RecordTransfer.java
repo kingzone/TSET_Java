@@ -89,7 +89,7 @@ public class RecordTransfer implements Transferable {
 			e.printStackTrace();
 			logger.error("ERROR while exporting metaDBs, ROLLBACK automatically " +
 					"and handle the exception outside.");
-			throw new Exception();
+			throw new SQLException();
 		} finally {
 			try {
 				rs.close();

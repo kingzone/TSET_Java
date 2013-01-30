@@ -31,7 +31,7 @@ public class MonitorConfigTransfer implements Transferable {
 	}
 
 	@Override
-	public void doExport() {
+	public void doExport() throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		// 1.generate SQL; 2.execute SQL and write the results into csv files
@@ -57,9 +57,12 @@ public class MonitorConfigTransfer implements Transferable {
 			csvWriter.writeCSV(rs);
 			logger.info("execute sql : " + sql);
 				
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			logger.error(e.getMessage());
 			e.printStackTrace();
+			logger.error("ERROR while exporting MonitorXXXConfig, " +
+					"ROLLBACK automatically and handle the exception outside.");
+			throw new SQLException();
 		} finally {
 			try {
 				if(rs!=null) rs.close();
