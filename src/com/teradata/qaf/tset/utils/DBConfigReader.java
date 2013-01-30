@@ -40,7 +40,7 @@ public class DBConfigReader {
 					// The CRLF character will be treated as a node, so using IF.
 					if (DBElementNode.hasChildNodes()) {
 						
-						System.out.println(DBElementNode.getNodeName() + ":" + DBElementNode.getTextContent());
+						//System.out.println(DBElementNode.getNodeName() + ":" + DBElementNode.getTextContent());
 						//System.out.println(m);
 						if (DBElementNode.getNodeName().equals("URL")) {
 							//url = DBElementNode.getTextContent();
