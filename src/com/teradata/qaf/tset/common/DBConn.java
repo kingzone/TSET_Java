@@ -97,6 +97,7 @@ public class DBConn {
 			Class.forName("com.teradata.jdbc.TeraDriver");
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
+			logger.error(e1.getMessage());
 		}
 		//
 		//initDBConfig("DBConfig.xml");
@@ -110,6 +111,9 @@ public class DBConn {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			logger.error(e1.getMessage());
 		}
 		if (conn == null) {
 //			System.out.println("ERROR: Get connection to " + url + " FAILED!");

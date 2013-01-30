@@ -54,6 +54,11 @@ public class Exporter {
 		
 		//Connection conn = DBConn.getConnection();
 		Connection conn = DBConn.getConnection(dbConfig);
+		// return if conn is null
+		if(conn == null) {
+			logger.error("Get connection Failed, skip this database.");
+			return;
+		}
 		
 		// check Authority
 		ExpAuthorityImpl expAu = new ExpAuthorityImpl(conn, tsetInfoTables, DBConn.getDatabase(), DBConn.getUsername());
