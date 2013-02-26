@@ -44,15 +44,30 @@ private TSETInfoTables tsetInfoTables;
 		impAu.grant();
 		
 		// BT
-		try {
-			conn.setAutoCommit(false);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			conn.setAutoCommit(false);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 		
 		// import DDL
 		DDLTransfer ddlTransfer = new DDLTransfer(conn);
-		ddlTransfer.doImport();
+		try {
+			ddlTransfer.doImport();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			try {
+				if(conn != null && !conn.isClosed()) conn.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+			
+			logger.error("ERROR while importing DDLs, ROLLBACK automatically " +
+					"and EXIT the Application.");
+			ImpRollBackImpl impRollBack = new ImpRollBackImpl(impAu);
+			impRollBack.doRollBack();
+			System.exit(-1);
+		}
 		
 		// import CostProfiles, CostParameters, RAS
 		for(MetaDB metaDB : tsetInfoTables.getMetaDBList()) {
@@ -67,11 +82,11 @@ private TSETInfoTables tsetInfoTables;
 		// import physical/virtual config
 		
 		// ET
-		try {
-			conn.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			conn.commit();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 		
 		impAu.revoke();
 		

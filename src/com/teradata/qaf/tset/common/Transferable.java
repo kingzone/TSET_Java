@@ -7,6 +7,6 @@ public interface Transferable {
 	
 	public String getGeneratedSQL();
 	public void doExport() throws Exception;
-	public void doImport();
+	public void doImport() throws Exception;
 	
 }

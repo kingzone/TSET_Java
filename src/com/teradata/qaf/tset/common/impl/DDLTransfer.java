@@ -86,7 +86,7 @@ public class DDLTransfer implements Transferable {
 	}
 
 	@Override
-	public void doImport() {
+	public void doImport() throws SQLException {
 		PreparedStatement ps = null;
 		boolean res = false;
 		try {
@@ -103,10 +103,10 @@ public class DDLTransfer implements Transferable {
 				
 				String sqlTemp = it.next();
 				
-				// empty string 
-				//if(sqlTemp.equals("") || sqlTemp.startsWith("BEGIN LOADING")) continue;
-				//if(sqlTemp.equals("") || sqlTemp.equals(" ")) continue;
+				// skip the specific lines. 
 				if(sqlTemp.matches("\\s+") || sqlTemp.toUpperCase().startsWith("BEGIN LOADING")) continue;
+				
+				// split the string with one or more spaces
 				String []arr = sqlTemp.trim().split("\\s+");
 				//if(sqlTemp.substring(0, 11).equalsIgnoreCase("create table") || sqlTemp.substring(0, 21).equalsIgnoreCase("create multiset table"))
 				if ((arr[0].equalsIgnoreCase("create") && arr[1].equalsIgnoreCase("table"))
@@ -136,7 +136,7 @@ public class DDLTransfer implements Transferable {
 				
 				// empty string 
 				if(sqlTemp.matches("\\s+") || sqlTemp.toUpperCase().startsWith("BEGIN LOADING")) {
-					// write only once is ok.
+					// log only once and increment the variable countAll.
 					logger.info("*["+countAll+"/"+sqlList.size()+"]" + sqlTemp);
 					++ countAll;
 					continue;
@@ -162,18 +162,23 @@ public class DDLTransfer implements Transferable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
-			try {
-				conn.rollback();
-				conn.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			System.exit(1);
+			logger.error("ERROR while importing DDLs, ROLLBACK automatically " +
+					"and handle the exception outside.");
+			throw new SQLException();
+			
+//			try {
+//				conn.rollback();
+//				conn.close();
+//			} catch (SQLException e1) {
+//				e1.printStackTrace();
+//			}
+//			System.exit(1);
 		} finally {
 			try {
 				if(ps!=null) ps.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 		
