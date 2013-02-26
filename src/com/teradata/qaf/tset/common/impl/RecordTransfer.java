@@ -104,7 +104,7 @@ public class RecordTransfer implements Transferable {
 	}
 
 	@Override
-	public void doImport() {
+	public void doImport() throws SQLException {
 		logger.info("Now import metaDB: " + this.metaDB.getName());
 		for(Table table : metaDB.getTableList()) {
 			//if (!table.getName().equals("DBC.CostProfiles")) continue;
@@ -123,14 +123,18 @@ public class RecordTransfer implements Transferable {
 				
 				e.printStackTrace();
 				logger.error(e.getMessage());
-				try {
-					//conn.rollback();
-					conn.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-					logger.error(e1.getMessage());
-				}
-				System.exit(1);
+				logger.error("ERROR while importing metaDBs, ROLLBACK automatically " +
+						"and handle the exception outside.");
+				throw new SQLException();
+				
+//				try {
+//					//conn.rollback();
+//					conn.close();
+//				} catch (SQLException e1) {
+//					e1.printStackTrace();
+//					logger.error(e1.getMessage());
+//				}
+//				System.exit(1);
 			}
 		}
 	}

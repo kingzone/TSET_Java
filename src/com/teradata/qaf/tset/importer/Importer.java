@@ -70,13 +70,27 @@ private TSETInfoTables tsetInfoTables;
 		}
 		
 		// import CostProfiles, CostParameters, RAS
-		for(MetaDB metaDB : tsetInfoTables.getMetaDBList()) {
-			// tackle tables of each metaDB
-			logger.info("Now tackling MetaDB: " + metaDB.getName());
-			//if(!metaDB.getName().equalsIgnoreCase("CostProfiles")) continue;
-			RecordTransfer recordTransfer = new RecordTransfer(metaDB, conn);
-			recordTransfer.doImport();
-			
+		try {
+			for(MetaDB metaDB : tsetInfoTables.getMetaDBList()) {
+				// tackle tables of each metaDB
+				logger.info("Now tackling MetaDB: " + metaDB.getName());
+				//if(!metaDB.getName().equalsIgnoreCase("CostProfiles")) continue;
+				RecordTransfer recordTransfer = new RecordTransfer(metaDB, conn);
+				recordTransfer.doImport();
+				
+			}
+		} catch (Exception e) {
+			try {
+				if(conn != null && !conn.isClosed()) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			logger.error("ERROR while importing metaDBs, ROLLBACK automatically " +
+					"and EXIT the Application.");
+			ImpRollBackImpl impRollBack = new ImpRollBackImpl(impAu);
+			impRollBack.doRollBack();
+			System.exit(-1);
 		}
 		
 		// import physical/virtual config
