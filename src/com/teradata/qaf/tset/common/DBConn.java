@@ -170,7 +170,7 @@ public class DBConn {
 	public static void closeConnection(Connection conn) {
 		if (conn != null) {
 			try {
-				conn.close();
+				if (!conn.isClosed()) conn.close();
 				logger.info("DB connection close success.");
 			} catch (SQLException e) {
 				e.printStackTrace();

@@ -15,7 +15,7 @@ import com.teradata.qaf.tset.pojo.TSETInfoTables;
 import com.teradata.qaf.tset.utils.XMLReader;
 
 public class Importer {
-private TSETInfoTables tsetInfoTables;
+	private TSETInfoTables tsetInfoTables;
 	
 	private static final Logger logger = Logger.getLogger(Importer.class.getName());
 
@@ -74,7 +74,6 @@ private TSETInfoTables tsetInfoTables;
 			for(MetaDB metaDB : tsetInfoTables.getMetaDBList()) {
 				// tackle tables of each metaDB
 				logger.info("Now tackling MetaDB: " + metaDB.getName());
-				//if(!metaDB.getName().equalsIgnoreCase("CostProfiles")) continue;
 				RecordTransfer recordTransfer = new RecordTransfer(metaDB, conn);
 				recordTransfer.doImport();
 				
@@ -89,6 +88,8 @@ private TSETInfoTables tsetInfoTables;
 			logger.error("ERROR while importing metaDBs, ROLLBACK automatically " +
 					"and EXIT the Application.");
 			ImpRollBackImpl impRollBack = new ImpRollBackImpl(impAu);
+			impRollBack.setTsetInfoTables(tsetInfoTables);
+			impRollBack.setConn(conn);
 			impRollBack.doRollBack();
 			System.exit(-1);
 		}

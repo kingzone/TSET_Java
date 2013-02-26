@@ -103,4 +103,9 @@ public class CommonConfig {
 		return "SELECT t2.* " + "FROM TABLE (MonitorVirtualConfig()) AS t2;";
 	}
 	
+	// SQL statement to clear metaDBs' tables
+	public static String sqlClearMetaDBTable(Table table) {
+		return "delete from " + table.getName();
+	}
+	
 }
