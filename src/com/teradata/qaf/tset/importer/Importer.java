@@ -43,13 +43,6 @@ public class Importer {
 		impAu.check();
 		impAu.grant();
 		
-		// BT
-//		try {
-//			conn.setAutoCommit(false);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-		
 		// import DDL
 		DDLTransfer ddlTransfer = new DDLTransfer(conn);
 		try {
@@ -95,13 +88,6 @@ public class Importer {
 		}
 		
 		// import physical/virtual config
-		
-		// ET
-//		try {
-//			conn.commit();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
 		
 		impAu.revoke();
 		
