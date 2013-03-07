@@ -36,11 +36,7 @@ public class DDLTransfer implements Transferable {
 	
 	// generate SQL statement for exporting
 	public String generateSQL(String database) {
-//		String sql = "select requesttext from dbc.tables order by createtimestamp";
 		String sql = CommonConfig.sqlQueryDDL(database);;
-//		if (database!=null && !database.equals("")) {
-//			sql = "select requesttext from dbc.tables where databasename='"+database+"' order by createtimestamp";
-//		}
 		return sql;
 	}
 	
@@ -59,10 +55,7 @@ public class DDLTransfer implements Transferable {
 				
 				sqlList.add(rs.getString("requesttext"));
 			}
-			//rs.close();
-			//ps.close();
 			// can use multi-thread, fork a new thread to write file
-//			SQLWriter.setFileName("TSETInfoTables/" + DBConn.getDatabase() + ".sql");
 			SQLWriter.setFileName(CommonConfig.path() + 
 					DBConn.getDatabase() + ".sql");
 			SQLWriter.writeSQL(sqlList);
@@ -85,14 +78,15 @@ public class DDLTransfer implements Transferable {
 		}
 	}
 
+	/**
+	 * Create all the tables firstly order by createtimestamp, and then create views.
+	 */
 	@Override
 	public void doImport() throws SQLException {
 		PreparedStatement ps = null;
 		boolean res = false;
 		try {
-			//conn.setAutoCommit(false);
 			
-//			List<String> sqlList = SQLReader.readSQL("TSETInfoTables/" + DBConn.getDatabase() + ".sql");
 			List<String> sqlList = SQLReader.readSQL(CommonConfig.path() + 
 					DBConn.getDatabase() + ".sql");
 			Iterator<String> it = sqlList.iterator();
@@ -108,13 +102,11 @@ public class DDLTransfer implements Transferable {
 				
 				// split the string with one or more spaces
 				String []arr = sqlTemp.trim().split("\\s+");
-				//if(sqlTemp.substring(0, 11).equalsIgnoreCase("create table") || sqlTemp.substring(0, 21).equalsIgnoreCase("create multiset table"))
 				if ((arr[0].equalsIgnoreCase("create") && arr[1].equalsIgnoreCase("table"))
 						|| (arr[0].equalsIgnoreCase("create") && arr[1].equalsIgnoreCase("multiset") && arr[2].equalsIgnoreCase("table"))
 						|| (arr[0].equalsIgnoreCase("create") && arr[1].equalsIgnoreCase("set") && arr[2].equalsIgnoreCase("table")))
 				{
 					logger.info("["+countAll+"/"+sqlList.size()+"]" + sqlTemp);
-					//if (countAll < 452) {countAll++; continue;}
 					ps = conn.prepareStatement(sqlTemp);
 					
 					res = ps.execute();
@@ -122,7 +114,7 @@ public class DDLTransfer implements Transferable {
 					++ countAll;
 				}
 			}
-//			
+			
 			conn.commit();
 			logger.info("Totally create table count: " + countAll);
 			
@@ -147,7 +139,6 @@ public class DDLTransfer implements Transferable {
 						|| (arr[0].equalsIgnoreCase("create") && arr[1].equalsIgnoreCase("set") && arr[2].equalsIgnoreCase("table"))))
 				{
 					logger.info("["+countAll+"/"+sqlList.size()+"]" + sqlTemp);
-					//if (countAll < 452) {countAll++; continue;}
 					ps = conn.prepareStatement(sqlTemp);
 					res = ps.execute();
 					conn.commit();
@@ -166,13 +157,6 @@ public class DDLTransfer implements Transferable {
 					"and handle the exception outside.");
 			throw new SQLException();
 			
-//			try {
-//				conn.rollback();
-//				conn.close();
-//			} catch (SQLException e1) {
-//				e1.printStackTrace();
-//			}
-//			System.exit(1);
 		} finally {
 			try {
 				if(ps!=null) ps.close();
@@ -184,6 +168,7 @@ public class DDLTransfer implements Transferable {
 		
 	}
 	/**
+	// Create all the tables and view order by createtimestamp
 	public void doImport() {
 		PreparedStatement ps = null;
 		boolean res = false;
