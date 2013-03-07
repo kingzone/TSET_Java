@@ -128,7 +128,7 @@ public class DBConn {
 			e1.printStackTrace();
 		}
 		//
-		initDBConfig("DBConfig.xml");
+		initDBConfig("DBConfig_IMP.xml");
 		
 		String connStr = CommonConfig.connectionString(url, database, charset, tmode);
 		logger.info(connStr);
