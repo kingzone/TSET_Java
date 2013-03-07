@@ -129,20 +129,4 @@ public class Exporter {
 		
 	}
 	
-	public void exportDDL() {
-		
-	}
-	
-	public void exportCostProfiles() {
-		
-	}
-	
-	public void exportCostParameters() {
-		
-	}
-	
-	public void exportRAS() {
-		
-	}
-	
 }
