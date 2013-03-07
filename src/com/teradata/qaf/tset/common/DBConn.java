@@ -57,13 +57,10 @@ public class DBConn {
 				Node DBNode = DBNodeList.item(i);
 				NodeList DBElementNodeList = DBNode.getChildNodes();
 				for(int m = 0; m < DBElementNodeList.getLength(); m++) {
-					//Node columnContent = columnContentList.item(m);
 					Node DBElementNode = DBElementNodeList.item(m);
 					// The CRLF character will be treated as a node, so using IF.
 					if (DBElementNode.hasChildNodes()) {
 						
-						//System.out.println(DBElementNode.getNodeName() + ":" + DBElementNode.getTextContent());
-						//System.out.println(m);
 						if (DBElementNode.getNodeName().equals("URL")) {
 							url = DBElementNode.getTextContent();
 						} else if (DBElementNode.getNodeName().equalsIgnoreCase("DATABASE")) {
@@ -103,7 +100,6 @@ public class DBConn {
 		//initDBConfig("DBConfig.xml");
 		initDBConfig(dbConfig);
 		
-//		String connStr = url + "database=\"" + database + "\",charset=" + charset + ",tmode=" + tmode;
 		String connStr = CommonConfig.connectionString(url, database, charset, tmode);
 		logger.info(connStr);
 		try {
@@ -116,10 +112,8 @@ public class DBConn {
 			logger.error(e1.getMessage());
 		}
 		if (conn == null) {
-//			System.out.println("ERROR: Get connection to " + url + " FAILED!");
 			logger.info("ERROR: Get connection to " + url + " FAILED!");
 		} else {
-			//System.out.println("INFO: Get connection to " + url + " SUCCESS!");
 			logger.info("INFO: Get connection to " + url + " SUCCESS!");
 		}
 		return conn;
@@ -136,7 +130,6 @@ public class DBConn {
 		//
 		initDBConfig("DBConfig.xml");
 		
-//		String connStr = url + "database=\"" + database + "\",charset=" + charset + ",tmode=" + tmode;
 		String connStr = CommonConfig.connectionString(url, database, charset, tmode);
 		logger.info(connStr);
 		try {
@@ -146,10 +139,8 @@ public class DBConn {
 			logger.error(e.getMessage());
 		}
 		if (conn == null) {
-//				System.out.println("ERROR: Get connection to " + url + " FAILED!");
 			logger.info("ERROR: Get connection to " + url + " FAILED!");
 		} else {
-			//System.out.println("INFO: Get connection to " + url + " SUCCESS!");
 			logger.info("INFO: Get connection to " + url + " SUCCESS!");
 		}
 		return conn;

@@ -4,12 +4,7 @@ import com.teradata.qaf.tset.pojo.Table;
 
 public class CommonConfig {
 
-	// 
-	//public static final String PATH = "TSETInfoTables/";
 	// SQL statement to query DDL
-//	public static String sqlQueryDDL = "select requesttext from dbc.tables " +
-//			"where databasename='" + DBConn.getDatabase() + 
-//			"' order by createtimestamp";
 	
 	public static String sqlQueryDDL(String databaseName) {
 		String sqlQueryDDL;

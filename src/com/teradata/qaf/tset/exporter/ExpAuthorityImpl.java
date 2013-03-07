@@ -28,12 +28,7 @@ public class ExpAuthorityImpl implements Authority {
 	
 	private List<String> needGrant;
 	
-//	public ExpAuthorityImpl() {
-//		this.needGrant = new ArrayList<String>();
-//	}
-	
 	public ExpAuthorityImpl(Connection conn, TSETInfoTables tsetInfoTables, String databaseName, String userName) {
-//		this();
 		this.needGrant = new ArrayList<String>();
 		this.conn = conn;
 		this.databaseName = databaseName;
@@ -46,7 +41,7 @@ public class ExpAuthorityImpl implements Authority {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			//conn.setAutoCommit(false);
+			
 			Iterator<MetaDB> it = this.tsetInfoTables.getMetaDBList().iterator();
 			while(it.hasNext()) {
 				MetaDB metaDB = it.next();
@@ -61,7 +56,6 @@ public class ExpAuthorityImpl implements Authority {
 						rs = ps.executeQuery();
 						boolean flag = true;
 						while(rs.next()) {
-							//System.out.println(rs.getString("accessRight"));
 							if(rs.getString("accessRight").trim().equalsIgnoreCase("R")) {
 								flag = false;
 								logger.info("NO Need Grant R on table: " + tableName);
@@ -77,8 +71,6 @@ public class ExpAuthorityImpl implements Authority {
 				}
 			}
 			
-			
-			//conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());

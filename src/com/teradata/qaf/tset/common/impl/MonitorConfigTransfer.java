@@ -26,7 +26,6 @@ public class MonitorConfigTransfer implements Transferable {
 	
 	@Override
 	public String getGeneratedSQL() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -37,21 +36,17 @@ public class MonitorConfigTransfer implements Transferable {
 		// 1.generate SQL; 2.execute SQL and write the results into csv files
 		try {
 			
-//			String sql = "SELECT t2.*  FROM TABLE (MonitorPhysicalConfig()) AS t2;";
 			String sql = CommonConfig.sqlQueryMonitorPhysicalConfig();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-//			TSETCSVWriter csvWriter = new TSETCSVWriter("TSETInfoTables/" + "MonitorPhysicalConfig.csv");
 			TSETCSVWriter csvWriter = new TSETCSVWriter(CommonConfig.path() + 
 					CommonConfig.MonitorPhysicalConfig);
 			csvWriter.writeCSV(rs);
 			logger.info("execute sql : " + sql);
 			
-//			sql = "SELECT t2.*  FROM TABLE (MonitorvirtualConfig()) AS t2;";
 			sql = CommonConfig.sqlQueryVirtualPhysicalConfig();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-//			csvWriter = new TSETCSVWriter("TSETInfoTables/" + "MonitorvirtualConfig.csv");
 			csvWriter = new TSETCSVWriter(CommonConfig.path() + 
 					CommonConfig.MonitorvirtualConfig);
 			csvWriter.writeCSV(rs);
@@ -78,7 +73,6 @@ public class MonitorConfigTransfer implements Transferable {
 
 	@Override
 	public void doImport() {
-		// TODO Auto-generated method stub
 
 	}
 

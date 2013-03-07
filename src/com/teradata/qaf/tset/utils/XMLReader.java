@@ -52,7 +52,7 @@ public class XMLReader extends BaseReader {
 			this.document = builder.newDocument(); 
 			logger.info("initilize the document success.");
 		} catch (ParserConfigurationException e) { 
-			//System.out.println(e.getMessage()); 
+			
 			logger.error(e.getMessage());
 		} 
 	} 
@@ -85,19 +85,14 @@ public class XMLReader extends BaseReader {
 			PrintWriter pw = new PrintWriter(new FileOutputStream(fileName)); 
 			StreamResult result = new StreamResult(pw); 
 			transformer.transform(source, result); 
-			//System.out.println("generate XML file success!"); 
 			logger.info("Generate XML file success!");
 		} catch (TransformerConfigurationException e) { 
-			//System.out.println(e.getMessage()); 
 			logger.error(e.getMessage());
 		} catch (IllegalArgumentException e) { 
-			//System.out.println(e.getMessage()); 
 			logger.error(e.getMessage());
 		} catch (FileNotFoundException e) { 
-			//System.out.println(e.getMessage());
 			logger.error(e.getMessage());
 		} catch (TransformerException e) { 
-			//System.out.println(e.getMessage());
 			logger.error(e.getMessage());
 		} 
 	} 
@@ -159,8 +154,6 @@ public class XMLReader extends BaseReader {
 							// The CRLF character will be treated as a node, so using IF.
 							if (columnContentNode.hasChildNodes()) {
 								
-								//System.out.println(columnContentNode.getNodeName() + ":" + columnContentNode.getTextContent());
-								//System.out.println(m);
 								if (columnContentNode.getNodeName().equals("columnName")) {
 									column.setName(columnContentNode.getTextContent());
 								} else if (columnContentNode.getNodeName().equals("columnType")) {
@@ -181,20 +174,15 @@ public class XMLReader extends BaseReader {
 				logger.info(i + " metaDB tackled.");
 			} 
 			infoTables.setMetaDBList(metaDBList);
-			//System.out.println("parse XML success."); 
 			logger.info("Parse XML success.");
 			return infoTables;
 		} catch (FileNotFoundException e) { 
-			//System.out.println(e.getMessage()); 
 			logger.error(e.getMessage());
 		} catch (ParserConfigurationException e) { 
-			//System.out.println(e.getMessage());
 			logger.error(e.getMessage());
 		} catch (SAXException e) { 
-			//System.out.println(e.getMessage());
 			logger.error(e.getMessage());
 		} catch (IOException e) { 
-			//System.out.println(e.getMessage());
 			logger.error(e.getMessage());
 		} 
 		return null;
@@ -208,7 +196,6 @@ public class XMLReader extends BaseReader {
 			for(int i=0; i<attList.getLength(); i++) {
 				Node att = attList.item(i);
 				
-				//System.out.println(att.getNodeName() + ":" + att.getNodeValue());
 				//logger.info(att.getNodeName() + ":" + att.getNodeValue());
 				if (att.getNodeName().equals("id")) {
 					column.setId(att.getNodeValue());
@@ -226,7 +213,6 @@ public class XMLReader extends BaseReader {
 			for(int i=0; i<attList.getLength(); i++) {
 				Node att = attList.item(i);
 				
-				//System.out.println(att.getNodeName() + ":" + att.getNodeValue());
 				logger.info(att.getNodeName() + " : " + att.getNodeValue());
 				if (att.getNodeName().equals("id")) {
 					table.setId(att.getNodeValue());
@@ -247,7 +233,6 @@ public class XMLReader extends BaseReader {
 		if(attList != null) {
 			for(int n=0; n<attList.getLength(); n++) {
 				Node att = attList.item(n);
-				//System.out.println(att.getNodeName() + ":" + att.getNodeValue());
 				logger.info(att.getNodeName() + ":" + att.getNodeValue());
 			}
 		}
@@ -260,7 +245,6 @@ public class XMLReader extends BaseReader {
 			for(int i=0; i<attList.getLength(); i++) {
 				Node att = attList.item(i);
 				
-				//System.out.println(att.getNodeName() + ":" + att.getNodeValue());
 				logger.info(att.getNodeName() + " : " + att.getNodeValue());
 				if (att.getNodeName().equals("id")) {
 					metaDB.setId(att.getNodeValue());

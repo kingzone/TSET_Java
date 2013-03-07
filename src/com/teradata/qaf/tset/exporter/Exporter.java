@@ -22,16 +22,13 @@ public class Exporter {
 
 	private final Logger logger = Logger.getLogger(Exporter.class.getName());
 	
-	//private List<ITransferable> transferableList;
 	private TSETInfoTables tsetInfoTables;
-	//private List<TSETInfoTables> tsetInfoTablesList;
 	
 	// initialize 
 	public void initialize(String ConfigFileName) {
 		
 		XMLReader xmlReader = new XMLReader(ConfigFileName);
 		tsetInfoTables = xmlReader.parseXml();
-		//tsetInfoTablesList = xmlReader.parseXml();
 	}
 	
 	// 
@@ -41,7 +38,6 @@ public class Exporter {
 	
 	// export all
 	public void doTDExportAll() {
-		//List<DBConfig> dbConfigList = DBConfigReader.initDBConfig("DBConfig.xml");
 		List<DBConfig> dbConfigList = DBConfigReader.initDBConfig(CommonConfig.DBConfig());
 		for (DBConfig dbConfig : dbConfigList) {
 			this.doTDExport(dbConfig);
@@ -52,7 +48,6 @@ public class Exporter {
 	//public void doTDExport() {
 	public void doTDExport(DBConfig dbConfig) {
 		
-		//Connection conn = DBConn.getConnection();
 		Connection conn = DBConn.getConnection(dbConfig);
 		// return if conn is null
 		if(conn == null) {

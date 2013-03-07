@@ -43,14 +43,12 @@ public class RecordTransfer implements Transferable {
 	public String generateSQL(Table table, int flag) {
 		String sql = "";
 		if(flag == EXPORT) {
-//			sql = "select * from " + table.getName() + ";";
 			sql = CommonConfig.sqlQueryMetaDB(table);
 		} else if(flag == IMPORT) {
 			String cols = "?";
 			for(int i=1; i<table.getColumnList().size(); i++) {
 				cols += ", ?";
 			}
-//			sql = "insert into " + table.getName() + " values(" + cols + ")";
 			sql = CommonConfig.sqlInsertMetaDB(table, cols);
 					
 		} else {
@@ -66,13 +64,11 @@ public class RecordTransfer implements Transferable {
 		// 1.generate SQL; 2.execute SQL and write the results into csv files
 		try {
 			for(Table table : metaDB.getTableList()) {
-//				String sql = "select * from " + table.getName() + ";";
 				String sql = this.generateSQL(table, EXPORT);
 						
 				logger.info(sql);
 				ps = conn.prepareStatement(sql);
 				rs = ps.executeQuery();
-				//TSETCSVWriter csvWriter = new TSETCSVWriter("TSETInfoTables/" + metaDB.getName() + "/" + table.getName() + ".csv");
 				TSETCSVWriter csvWriter = new TSETCSVWriter(CommonConfig.path() + 
 						metaDB.getName() + "/" + table.getName() + ".csv");
 				csvWriter.writeCSV(rs);
@@ -85,7 +81,6 @@ public class RecordTransfer implements Transferable {
 			
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
-			//logger.error(e.getStackTrace().toString());
 			e.printStackTrace();
 			logger.error("ERROR while exporting metaDBs, ROLLBACK automatically " +
 					"and handle the exception outside.");
@@ -110,7 +105,6 @@ public class RecordTransfer implements Transferable {
 			//if (!table.getName().equals("DBC.CostProfiles")) continue;
 			// read the exported files
 			TSETCSVReader csvReader = new TSETCSVReader();
-			//List<String[]> recordList = csvReader.readCSV("TSETInfoTables/" + metaDB.getName() + "/" + table.getName() + ".csv");
 			List<String[]> recordList = csvReader.readCSV(CommonConfig.path() + 
 					metaDB.getName() + "/" + table.getName() + ".csv");
 			
@@ -127,14 +121,6 @@ public class RecordTransfer implements Transferable {
 						"and handle the exception outside.");
 				throw new SQLException();
 				
-//				try {
-//					//conn.rollback();
-//					conn.close();
-//				} catch (SQLException e1) {
-//					e1.printStackTrace();
-//					logger.error(e1.getMessage());
-//				}
-//				System.exit(1);
 			}
 		}
 	}
@@ -154,10 +140,9 @@ public class RecordTransfer implements Transferable {
         try
         {
             // Set parameter values indicated by ? (dynamic update)
-            //System.out.println(" Using setString() to bind value to the parameter marker. \n" );
             for (int nRecordCnt = 0; nRecordCnt < recordList.size(); nRecordCnt++)
             {
-            	// except the table header row
+            	// skip the table header row
             	if (nRecordCnt == 0) continue;
                 for (int nItemCnt = 0; nItemCnt < recordList.get(nRecordCnt).length && nItemCnt < table.getColumnList().size(); nItemCnt++) {
                     // setXXX according to the column type
