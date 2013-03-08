@@ -29,6 +29,9 @@ public class SQLWriter extends BaseWriter{
 				//fw.append(it.next() + ";\r\n");
 				
 				String tempSql = it.next();
+				
+				if (tempSql == null) continue;
+				
 				if (tempSql.endsWith(";")) {
 					//fw.append(tempSql + "\r\n");
 					bw.append(tempSql + "\r\n");
