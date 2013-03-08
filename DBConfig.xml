@@ -1,6 +1,15 @@
 <DBConfig>
   
   <DB>
+    <URL>jdbc:teradata://153.64.80.50/</URL>
+    <DATABASE>PCT_hist_usr</DATABASE>
+    <CHARSET>ASCII</CHARSET>
+    <TMODE>TERA</TMODE>
+    <USERNAME>PCT_hist_usr</USERNAME>
+    <PASSWORD>PCThist123</PASSWORD>
+  </DB>
+  <!--
+  <DB>
     <URL>jdbc:teradata://153.64.28.192/</URL>
     <DATABASE>king.test</DATABASE>
     <CHARSET>ASCII</CHARSET>
@@ -26,4 +35,5 @@
     <USERNAME>dbc</USERNAME>
     <PASSWORD>dbc</PASSWORD>
   </DB>
+  -->
 </DBConfig>
