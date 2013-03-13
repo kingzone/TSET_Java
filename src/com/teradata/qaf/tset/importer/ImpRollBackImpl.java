@@ -58,7 +58,7 @@ public class ImpRollBackImpl implements RollBack {
 		this.au.revoke();
 		logger.info("RollBack: Revoke success.");
 		
-		System.exit(-1);
+		//System.exit(-1);
 	}
 	
 	// clear all the metaDBs' tables
