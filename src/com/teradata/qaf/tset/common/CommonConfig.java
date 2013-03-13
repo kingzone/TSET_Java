@@ -56,14 +56,33 @@ public class CommonConfig {
 			"' and tablename='" + tableName.split("\\.")[1] + "'";
 	}
 	
+	// SQL statement to query Access Right(Authority) 
+	// on ALL(all tables of specified DataBase)
+	public static String sqlQueryAccessrightonALL(String tableName, String userName) {
+		return "select accessright from dbc.allrights " +
+			"where databasename='" + tableName.split("\\.")[0] + 
+			"' and username='" + userName + 
+			"' and tablename='ALL'";
+	}
+	
+	// SQL statement to grant accessRight of table to user
+	public static String sqlGrant(String tableName, String userName, String accessRight){ 
+		return "GRANT " + accessRight + " ON " + tableName + " to " + 
+					userName + " with grant option;";
+	}
+	
+	// SQL statement to revoke accessRight of table to user
+	public static String sqlRevoke(String tableName, String userName, String accessRight) { 
+		return "REVOKE " + accessRight + " ON " + tableName + "' from " + 
+					userName + ";";
+	}
+	
 	// SQL statement to grant select of table to user
-	//public static String sqlGrantSelect = "GRANT RETRIEVE/SELECT ON '" +
 	public static String sqlGrantSelect(String tableName, String userName){ 
 		return "GRANT SELECT ON " + tableName + " to " + userName + " with grant option;";
 	}
 	
 	// SQL statement to revoke select of table to user
-	//public static String sqlRevokeSelect = "REVOKE RETRIEVE/SELECT ON '" +
 	public static String sqlRevokeSelect(String tableName, String userName) { 
 		return "REVOKE SELECT ON " + tableName + "' from " + userName + ";";
 	}
