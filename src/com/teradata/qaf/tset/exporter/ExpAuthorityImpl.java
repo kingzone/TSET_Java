@@ -27,13 +27,60 @@ public class ExpAuthorityImpl implements Authority {
 	private Connection conn;
 	
 	private List<String> needGrant;
+	private List<String> needGrantEF;
 	
-	public ExpAuthorityImpl(Connection conn, TSETInfoTables tsetInfoTables, String databaseName, String userName) {
+	public ExpAuthorityImpl(Connection conn, TSETInfoTables tsetInfoTables, 
+			String databaseName, String userName) {
 		this.needGrant = new ArrayList<String>();
+		this.needGrantEF = new ArrayList<String>();
 		this.conn = conn;
 		this.databaseName = databaseName;
 		this.tsetInfoTables = tsetInfoTables;
 		this.userName = userName;
+	}
+	
+	/**
+	 * Check accessRight of userName on tableName
+	 * @param tableName
+	 * @param userName
+	 * @param accessRight
+	 * @throws SQLException
+	 */
+	private void check(String tableName, String userName, String accessRight) throws SQLException {
+		// Check accessRight on specified table
+		String sql = CommonConfig.sqlQueryAccessright(tableName, userName);
+		logger.info(sql);
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		boolean flag = true;
+		while(rs.next()) {
+			if(rs.getString("accessRight").trim().equalsIgnoreCase(accessRight)) {
+				flag = false;
+				logger.info("NO Need Grant " + accessRight + " on table: " + tableName);
+				break;
+			}
+		}
+		
+		// Check accessRight on ALL
+		sql = CommonConfig.sqlQueryAccessrightonALL(tableName, this.userName);
+		logger.info(sql);
+		ps = conn.prepareStatement(sql);
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			if(rs.getString("accessRight").trim().equalsIgnoreCase(accessRight)) {
+				flag = false;
+				logger.info("NO Need Grant " + accessRight + " on table: " + tableName);
+				break;
+			}
+		}
+		
+		if(flag) {
+			logger.info("Need Grant " + accessRight + " on table: " + tableName);
+			this.needGrantEF.add(tableName);
+			
+		}
+		rs.close();
+		ps.close();
 	}
 	
 	@Override
@@ -45,31 +92,51 @@ public class ExpAuthorityImpl implements Authority {
 			Iterator<MetaDB> it = this.tsetInfoTables.getMetaDBList().iterator();
 			while(it.hasNext()) {
 				MetaDB metaDB = it.next();
-				// Tables in CostProfiles have no R
-				if(!metaDB.getName().equalsIgnoreCase("CostProfiles")) {
-					Iterator<Table> itTable = metaDB.getTableList().iterator();
-					while(itTable.hasNext()) {
-						String tableName = itTable.next().getName();
-						String sql = CommonConfig.sqlQueryAccessright(tableName, this.userName);
-						logger.info(sql);
-						ps = conn.prepareStatement(sql);
-						rs = ps.executeQuery();
-						boolean flag = true;
-						while(rs.next()) {
-							if(rs.getString("accessRight").trim().equalsIgnoreCase("R")) {
-								flag = false;
-								logger.info("NO Need Grant R on table: " + tableName);
-								break;
-							}
-						}
-						if(flag) {
-							logger.info("Need Grant R on table: " + tableName);
-							this.needGrant.add(tableName);
-							
+				// Needs R on either ALL(all tables of specified DataBase) 
+				// or the specified table.
+				Iterator<Table> itTable = metaDB.getTableList().iterator();
+				while(itTable.hasNext()) {
+					String tableName = itTable.next().getName();
+					
+					// Check R on specified table
+					String sql = CommonConfig.sqlQueryAccessright(tableName, this.userName);
+					logger.info(sql);
+					ps = conn.prepareStatement(sql);
+					rs = ps.executeQuery();
+					boolean flag = true;
+					while(rs.next()) {
+						if(rs.getString("accessRight").trim().equalsIgnoreCase("R")) {
+							flag = false;
+							logger.info("NO Need Grant R on table: " + tableName);
+							break;
 						}
 					}
+					
+					// Check R on ALL
+					sql = CommonConfig.sqlQueryAccessrightonALL(tableName, this.userName);
+					logger.info(sql);
+					ps = conn.prepareStatement(sql);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						if(rs.getString("accessRight").trim().equalsIgnoreCase("R")) {
+							flag = false;
+							logger.info("NO Need Grant R on tables of DB: " + tableName);
+							break;
+						}
+					}
+					
+					if(flag) {
+						logger.info("Need Grant R on table: " + tableName);
+						this.needGrant.add(tableName);
+						
+					}
 				}
+				
 			}
+			
+			// Check EF 
+			this.check("SYSLIB.MonitorPhysicalConfig", this.userName, "EF");
+			this.check("SYSLIB.MonitorVirtualConfig", this.userName, "EF");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -80,7 +147,8 @@ public class ExpAuthorityImpl implements Authority {
 				e1.printStackTrace();
 			}
 			// Exit if exception
-			logger.error("Check Export privileges ERROR, ROLLBACK automatically and Exit the application.");
+			logger.error("Check Export privileges ERROR, " +
+					"ROLLBACK automatically and Exit the application.");
 			System.exit(-1);
 		} finally {
 			try {
@@ -94,11 +162,49 @@ public class ExpAuthorityImpl implements Authority {
 		
 	}
 
+	/**
+	 * Grant accessRight on tableName to userName
+	 * @param tableName
+	 * @param userName
+	 * @param accessRight
+	 * @throws SQLException
+	 */
+	private void grant(String tableName, String userName, String accessRight) throws SQLException {
+		PreparedStatement ps = null;
+		
+		String sql = CommonConfig.sqlGrant(tableName, userName, accessRight);
+		ps = conn.prepareStatement(sql);
+		ps.execute();
+		logger.info(sql);
+		ps.close();
+	}
+	
+	private void grant(String userName, String accessRight) {
+		Iterator<String> it = this.needGrantEF.iterator();
+		
+		while(it.hasNext()) {
+			String tableName = it.next();
+			try {
+				this.grant(tableName, userName, accessRight);
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				logger.error(e.getMessage());
+				this.revoke();
+				
+				DBConn.closeConnection(conn);
+				
+				logger.error("Grant Export privileges ERROR, " +
+						"ROLLBACK automatically and Exit the application.");
+				System.exit(-1);
+			}
+		}
+	}
+	
 	@Override
 	public void grant() {
 		PreparedStatement ps = null;
 		Iterator<String> it = this.needGrant.iterator();
-		
 		
 		// cannot put DDL and DCL into one transaction, only DML can
 		while(it.hasNext()) {
@@ -116,7 +222,8 @@ public class ExpAuthorityImpl implements Authority {
 				
 				DBConn.closeConnection(conn);
 				
-				logger.error("Grant Export privileges ERROR, ROLLBACK automatically and Exit the application.");
+				logger.error("Grant Export privileges ERROR, " +
+						"ROLLBACK automatically and Exit the application.");
 				System.exit(-1);
 			} finally {
 				try {
@@ -128,6 +235,9 @@ public class ExpAuthorityImpl implements Authority {
 			}
 			
 		}
+		
+		// Grant EF on MonitorPhysicalConfig or MonitorVirtualConfig
+		this.grant(this.userName, "EXECUTE FUNCTION");
 		
 	}
 
@@ -151,7 +261,8 @@ public class ExpAuthorityImpl implements Authority {
 				logger.error(e.getMessage());
 				
 				DBConn.closeConnection(conn);
-				logger.error("Revoke Export privileges ERROR, ROLLBACK automatically and Exit the application.");
+				logger.error("Revoke Export privileges ERROR, " +
+						"ROLLBACK automatically and Exit the application.");
 				System.exit(-1);
 			} finally {
 				try {
