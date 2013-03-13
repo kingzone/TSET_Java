@@ -90,12 +90,12 @@ public class CommonConfig {
 	
 	// SQL statement to export Physical Config
 	public static String sqlQueryMonitorPhysicalConfig() { 
-		return "SELECT t2.* " + "FROM TABLE (MonitorPhysicalConfig()) AS t2;";
+		return "SELECT t2.* FROM TABLE (MonitorPhysicalConfig()) AS t2;";
 	}
 	
 	// SQL statement to export virtual Config
 	public static String sqlQueryVirtualPhysicalConfig() { 
-		return "SELECT t2.* " + "FROM TABLE (MonitorVirtualConfig()) AS t2;";
+		return "SELECT t2.* FROM TABLE (MonitorVirtualConfig()) AS t2;";
 	}
 	
 	// SQL statement to clear metaDBs' tables
