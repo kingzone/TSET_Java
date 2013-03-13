@@ -56,7 +56,7 @@ public class Importer {
 			}
 			
 			logger.error("ERROR while importing DDLs, ROLLBACK automatically " +
-					"and EXIT the Application.");
+					"and EXIT the Application." + e1.getMessage());
 			ImpRollBackImpl impRollBack = new ImpRollBackImpl(impAu);
 			impRollBack.doRollBack();
 			System.exit(-1);
