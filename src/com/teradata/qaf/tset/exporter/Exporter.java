@@ -44,7 +44,7 @@ public class Exporter {
 		}
 	}
 	
-	// export DDL, CostProfiles, CostParameters, RAS and physical/virtual config, in metaDB level
+	// export DDL, CostProfiles, CostParameters, RAS and physical/virtual config
 	//public void doTDExport() {
 	public void doTDExport(DBConfig dbConfig) {
 		
@@ -56,7 +56,8 @@ public class Exporter {
 		}
 		
 		// check Authority
-		ExpAuthorityImpl expAu = new ExpAuthorityImpl(conn, tsetInfoTables, DBConn.getDatabase(), DBConn.getUsername());
+		ExpAuthorityImpl expAu = new ExpAuthorityImpl(conn, tsetInfoTables, 
+				DBConn.getDatabase(), DBConn.getUsername());
 		expAu.check();
 		expAu.grant();
 		

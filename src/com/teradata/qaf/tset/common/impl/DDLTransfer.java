@@ -98,7 +98,9 @@ public class DDLTransfer implements Transferable {
 				String sqlTemp = it.next();
 				
 				// skip the specific lines. 
-				if(sqlTemp.matches("\\s+") || sqlTemp.toUpperCase().startsWith("BEGIN LOADING")) continue;
+				if(sqlTemp.matches("\\s+") || sqlTemp.toUpperCase().startsWith("BEGIN LOADING") 
+						|| sqlTemp.toLowerCase().matches("create.*as.*with.*data.*") 
+						|| sqlTemp.contains("CREATE SET TABLE pct_hist_usr.Test_Case")) continue;
 				
 				// split the string with one or more spaces
 				String []arr = sqlTemp.trim().split("\\s+");
@@ -127,12 +129,15 @@ public class DDLTransfer implements Transferable {
 				String sqlTemp = it.next();
 				
 				// empty string 
-				if(sqlTemp.matches("\\s+") || sqlTemp.toUpperCase().startsWith("BEGIN LOADING")) {
+				if(sqlTemp.matches("\\s+") || sqlTemp.toUpperCase().startsWith("BEGIN LOADING") 
+						|| sqlTemp.toLowerCase().matches("create.*as.*with.*data.*")
+						|| sqlTemp.contains("REPLACE VIEW PCT_PTE_VIEW")) {
 					// log only once and increment the variable countAll.
 					logger.info("*["+countAll+"/"+sqlList.size()+"]" + sqlTemp);
 					++ countAll;
 					continue;
-				}
+				} 
+				
 				String []arr = sqlTemp.trim().split("\\s+");
 				if (!((arr[0].equalsIgnoreCase("create") && arr[1].equalsIgnoreCase("table"))
 						|| (arr[0].equalsIgnoreCase("create") && arr[1].equalsIgnoreCase("multiset") && arr[2].equalsIgnoreCase("table"))
@@ -155,7 +160,7 @@ public class DDLTransfer implements Transferable {
 			logger.error(e.getMessage());
 			logger.error("ERROR while importing DDLs, ROLLBACK automatically " +
 					"and handle the exception outside.");
-			throw new SQLException();
+			throw new SQLException("3807");
 			
 		} finally {
 			try {
