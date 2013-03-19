@@ -126,23 +126,29 @@ public class RecordTransfer implements Transferable {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-//	private static void executeBatchRequest(Connection con, String sInsert, String[][] aasEmps) throws SQLException
-	private void executeBatchRequest(Connection con, String sInsert, 
-			Table table, List<String[]> recordList) throws SQLException
+//	private static void executeBatchRequest(
+//			Connection con, 
+//			String sInsert, 
+//			String[][] aasEmps) throws SQLException
+	private void executeBatchRequest(
+			Connection con, 
+			String sInsert, 
+			Table table, 
+			List<String[]> recordList) throws SQLException
 	{
 		ArrayList failedParameterSets = new ArrayList();
 		PreparedStatement pstmt;
-		System.out.println(" Preparing this SQL statement for execution:\n " + sInsert);
+		logger.info(" Preparing this SQL statement for execution:\n " + sInsert);
 
         // Creating a prepared statement object from an active connection
         pstmt = con.prepareStatement(sInsert);
-        System.out.println(" Prepared statement object created. \n");
+        logger.info(" Prepared statement object created. \n");
 
-        try
-        {
+        try {
             // Set parameter values indicated by ? (dynamic update)
-            for (int nRecordCnt = 0; nRecordCnt < recordList.size(); nRecordCnt++)
-            {
+            for (int nRecordCnt = 0; 
+            		nRecordCnt < recordList.size(); 
+            		nRecordCnt++) {
             	// skip the table header row
             	if (nRecordCnt == 0) continue;
                 for (int nItemCnt = 0; 
@@ -151,34 +157,35 @@ public class RecordTransfer implements Transferable {
                 		nItemCnt++) {
                     // setXXX according to the column type
                 	Column column = table.getColumnList().get(nItemCnt);
-                	logger.info(column.getType() + " : " + 
-                			recordList.get(nRecordCnt)[nItemCnt]);
+//                	logger.info(column.getType() + " : " + 
+//                			recordList.get(nRecordCnt)[nItemCnt]);
                 	if(column.getType().equalsIgnoreCase("INTEGER") || 
                 			column.getType().equalsIgnoreCase("SMALLINT") || 
                 			column.getType().equalsIgnoreCase("BYTEINT")) {
-                		pstmt.setInt(nItemCnt + 1, 
-                				Integer.parseInt(recordList.get(nRecordCnt)[nItemCnt]));
+                		pstmt.setInt(nItemCnt + 1, Integer.parseInt(
+                				recordList.get(nRecordCnt)[nItemCnt]));
                 	} else if (column.getType().equalsIgnoreCase("FLOAT")) {
-                		if (recordList.get(nRecordCnt)[nItemCnt].equals("")) {// empty string
+                		// empty string
+                		if (recordList.get(nRecordCnt)[nItemCnt].equals("")) {
                 			pstmt.setFloat(nItemCnt + 1, 0);
                 		} else {
-                			pstmt.setFloat(nItemCnt + 1, 
-                					Float.parseFloat(recordList.get(nRecordCnt)[nItemCnt]));
+                			pstmt.setFloat(nItemCnt + 1, Float.parseFloat(
+                					recordList.get(nRecordCnt)[nItemCnt]));
                 		}
                 	} else {
-                		pstmt.setString(nItemCnt + 1, recordList.get(nRecordCnt)[nItemCnt]);
+                		pstmt.setString(nItemCnt + 1, 
+                				recordList.get(nRecordCnt)[nItemCnt]);
                 	}
-                    //logger.info((nItemCnt+1) + ": " + recordList.get(nRecordCnt)[nItemCnt]);
+                    
                 }
                 pstmt.addBatch();
             }
 
-            try
-            {
+            try {
                 // The following code will perform an INSERT on the table.
-                System.out.println(" Submitting the batch request to be executed. \n");
+                logger.info(" Submitting the batch request to be executed. \n");
                 // The batch is empty
-                if(recordList.size() <=1 ) {
+                if(recordList.size() <= 1 ) {
                 	logger.info("Empty table. No Record in table: " + table.getName());
                 	return;
                 }
@@ -187,9 +194,8 @@ public class RecordTransfer implements Transferable {
                 logger.info("updateCount: " + updateCount.length + 
                 		" on Table: " + table.getName());
             }
-            catch (BatchUpdateException ex)
-            {
-                System.out.println(" Exception thrown " + 
+            catch (BatchUpdateException ex) {
+                logger.info(" Exception thrown " + 
                 		ex.getErrorCode() + ":" + ex.getMessage() + "\n");
                 logger.warn(ex.getMessage());
                 // If the error code is 1338, then this indicates that the new
@@ -198,8 +204,7 @@ public class RecordTransfer implements Transferable {
                 // 1338: A failure occurred while executing a PreparedStatement
                 // batch request. Details of the failure can be found in the
                 // exception chain that is accessible with getNextException.
-                if (ex.getErrorCode() == 1338)
-                {
+                if (ex.getErrorCode() == 1338) {
                     ArrayList resubmitParameterSets = new ArrayList();
                     // Get the array of update counts to check which parameter sets failed
                     int[] anUpdateCounts = ex.getUpdateCounts();
@@ -211,14 +216,11 @@ public class RecordTransfer implements Transferable {
                     // BatchUpdateException error code 1138 indicates that each
                     // non-successful update count corresponds to a chained
                     // SQLException, in order.
-                    for (int i = 0; i < anUpdateCounts.length; i++)
-                    {
-                        if (anUpdateCounts[i] == Statement.EXECUTE_FAILED)
-                        {
+                    for (int i = 0; i < anUpdateCounts.length; i++) {
+                        if (anUpdateCounts[i] == Statement.EXECUTE_FAILED) {
                             // If the error code is negative, then we know this
                             // parameter set failed
-                            if (se.getErrorCode() < 0)
-                            {
+                            if (se.getErrorCode() < 0) {
                                 // Since this parameter set failed lets add it
                                 // as well as the error to a list of failed
                                 // parameter sets
@@ -227,7 +229,9 @@ public class RecordTransfer implements Transferable {
                                 failedParameterSet.add(new Integer(se.getErrorCode()));
                                 failedParameterSet.add(se.getMessage());
 
-                                for (int nParam = 0; nParam < recordList.get(i).length; nParam++)
+                                for (int nParam = 0; 
+                                		nParam < recordList.get(i).length; 
+                                		nParam++)
                                     failedParameterSet.add(recordList.get(i)[nParam]);
                                 failedParameterSets.add(failedParameterSet);
                             }
@@ -235,12 +239,14 @@ public class RecordTransfer implements Transferable {
                             // If the error code is a non negative number, then
                             // the parameter set must be resubmitted individually
                             // using PreparedStatement executeUpdate method.
-                            else
-                            {
-                                // Add the paramter set to a list of sets that need to be resubmitted
-                                Object[] resubmitParameterSet = new Object[recordList.get(i).length];
+                            else {
+                                // Add the paramter set to a list of sets 
+                            	// that need to be resubmitted
+                                Object[] resubmitParameterSet = 
+                                		new Object[recordList.get(i).length];
                                 System.arraycopy(recordList.get(i), 0, 
-                                		resubmitParameterSet, 0, recordList.get(i).length);
+                                		resubmitParameterSet, 0, 
+                                		recordList.get(i).length);
                                 resubmitParameterSets.add(resubmitParameterSet);
                             }
                             se = se.getNextException();
@@ -250,37 +256,33 @@ public class RecordTransfer implements Transferable {
                     // We need to resubmit individual requests that were not executed
                     if (resubmitParameterSets.size() > 0)
                         failedParameterSets = resubmitIndividualParamSets(con, 
-                        		sInsert, resubmitParameterSets, failedParameterSets);
+                        		sInsert, resubmitParameterSets, 
+                        		failedParameterSets, table);
 
                     // Print the failed parameter sets and the exceptions
-                    System.out.println(" FAILED PARAMETER SETS: \n");
                     logger.error(" FAILED PARAMETER SETS: \n");
                     Iterator sets = failedParameterSets.iterator();
 
-                    while (sets.hasNext())
-                    {
+                    while (sets.hasNext()) {
                         Object[] params = ((ArrayList) sets.next()).toArray();
                         for (int iCnt = 2; iCnt < params.length; iCnt++) {
-                            System.out.print(params[iCnt]+"  ");
-                            //logger.error(params[iCnt]+"  ");
+                            logger.info(params[iCnt]+"  ");
                         }
-                        System.out.println("\n Error "+params[0]+": "+params[1]+"\n");
+                        
                         logger.error("\n Error "+params[0]+": "+params[1]+"\n");
                     }
                 }
-                else
-                {
-                    System.out.println(" All parameter sets failed \n"
-                                      +" Error "+ex.getErrorCode()+": "
-                                      +ex.getMessage()+"\n");
+                else {
+                    logger.info(" All parameter sets failed \n"
+                                       + " Error " + ex.getErrorCode() + ": "
+                                       + ex.getMessage() + "\n");
                 }
             }
         }
-        finally
-        {
+        finally {
             // Close the statement
             pstmt.close();
-            System.out.println("\n PreparedStatement object closed.\n");
+            logger.info("\n PreparedStatement object closed.\n");
         }
     } // End method executeBatchRequest
 
@@ -288,34 +290,48 @@ public class RecordTransfer implements Transferable {
 	private ArrayList resubmitIndividualParamSets(Connection con,
             String sInsertStmt,
             ArrayList resubmitParameterSets,
-            ArrayList failedParameterSets)
-	throws SQLException
-	{
+            ArrayList failedParameterSets,
+            Table table)
+	throws SQLException {
 		PreparedStatement pstmt;
 		
-		System.out.println(" Processing Individual Queries. \n");
-		System.out.println(" Preparing this SQL statement for execution:\n " + sInsertStmt);
+		logger.info(" Processing Individual Queries. \n");
+		logger.info(" Preparing SQL statement for execution:\n " + sInsertStmt);
 		
 		// Creating a prepared statement object from an active connection
 		pstmt = con.prepareStatement(sInsertStmt);
-		System.out.println(" Prepared statement object created. \n");
+		logger.info(" Prepared statement object created. \n");
 		
-		try
-		{
+		try {
 			// Set parameter values indicated by ? (dynamic update)
-			System.out.println(" Using setString() to bind value to the parameter marker. \n" );
+			
 			// Loop through each parameter set and resubmit them individually
-			for (int nParSetCnt = 0; nParSetCnt < resubmitParameterSets.size(); nParSetCnt++)
-			{
+			for (int nParSetCnt = 0; 
+					nParSetCnt < resubmitParameterSets.size(); 
+					nParSetCnt++) {
 				Object[] paramSet = (Object[]) resubmitParameterSets.get(nParSetCnt);
-				for (int nParam = 0; nParam < paramSet.length; nParam++)
-				pstmt.setString(nParam + 1, (String) paramSet[nParam]);
-				try
-				{
+				for (int nParam = 0; nParam < paramSet.length; nParam++) {
+					//pstmt.setString(nParam + 1, (String) paramSet[nParam]);
+					Column column = table.getColumnList().get(nParam);
+                	
+                	if(column.getType().equalsIgnoreCase("INTEGER") || 
+                			column.getType().equalsIgnoreCase("SMALLINT") || 
+                			column.getType().equalsIgnoreCase("BYTEINT")) {
+                		pstmt.setInt(nParam + 1, (int)(paramSet[nParam]));
+                	} else if (column.getType().equalsIgnoreCase("FLOAT")) {
+                		if (paramSet[nParam].equals("")) {// empty string
+                			pstmt.setFloat(nParam + 1, 0);
+                		} else {
+                			pstmt.setFloat(nParam + 1, (float)(paramSet[nParam]));
+                		}
+                	} else {
+                		pstmt.setString(nParam + 1, (String) paramSet[nParam]);
+                	}
+				}
+				try {
 					pstmt.executeUpdate();
 				}
-				catch (SQLException se)
-				{
+				catch (SQLException se) {
 					// Add any failures to the list of failed parameter sets
 					ArrayList failedParameterSet = new ArrayList(paramSet.length + 2);
 					failedParameterSet.add(new Integer(se.getErrorCode()));
@@ -327,11 +343,10 @@ public class RecordTransfer implements Transferable {
 				}
 			}
 		}
-		finally
-		{
+		finally {
 			// Close the statement
 			pstmt.close();
-			System.out.println("\n PreparedStatement object closed.\n");
+			logger.info("\n PreparedStatement object closed.\n");
 		}
 		return failedParameterSets;
 	}
