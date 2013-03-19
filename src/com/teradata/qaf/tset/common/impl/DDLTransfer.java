@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.log4j.Logger;
 
@@ -20,13 +21,11 @@ public class DDLTransfer implements Transferable {
 
 	private static Logger logger = Logger.getLogger(DDLTransfer.class.getName());
 	private Connection conn;
-	
-	public DDLTransfer() {
-		
-	}
+	private List<String> sqlListDrop;
 	
 	public DDLTransfer(Connection conn) {
 		this.conn = conn;
+		this.sqlListDrop = new ArrayList<String>();
 	}
 	
 	@Override
@@ -40,8 +39,85 @@ public class DDLTransfer implements Transferable {
 		return sql;
 	}
 	
-	
+	// Execute show table to get DDLs(CREATE and DROP)
+	/**
+	 * 
+	 * @param TableName : The name of Production DB's table
+	 * @param TableKind : The kind of table 
+	 * @return
+	 * @throws SQLException
+	 */
+	private String showTable(String TableName, String TableKind) 
+			throws SQLException {
+		String sqlCREATE = "";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = null;
+		switch(TableKind) {
+		case "T":
+			sql = CommonConfig.sqlShowTable + "\"" + TableName + "\"";
+			this.sqlListDrop.add(CommonConfig.sqlDropTable + 
+					"\"" + TableName + "\"");
+			break;
+		case "V":
+			sql = CommonConfig.sqlShowView + "\"" + TableName + "\"";
+			this.sqlListDrop.add(CommonConfig.sqlDropView + 
+					"\"" + TableName + "\"");
+			break;
+		case "M":
+			sql = CommonConfig.sqlShowMacro + "\"" + TableName + "\"";
+			this.sqlListDrop.add(CommonConfig.sqlDropMacro + 
+					"\"" + TableName + "\"");
+			break;
+		case "P":
+		case "E":
+			sql = CommonConfig.sqlShowProcedure + "\"" + TableName + "\"";
+			this.sqlListDrop.add(CommonConfig.sqlDropProcedure + 
+					"\"" + TableName + "\"");
+			break;
+		case "D":
+			break;
+		case "R":
+		case "F":
+			sql = CommonConfig.sqlShowFunction + "\"" + TableName + "\"";
+			this.sqlListDrop.add(CommonConfig.sqlDropFunction + 
+					"\"" + TableName + "\"");
+			break;
+		default:
+			break;
+		}
+		if(sql == null) return null;
+		ps = conn.prepareStatement(sql);
+		logger.info(sql);
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			sqlCREATE = rs.getString(1);
+		}
+		
+		// Remove the DB name in the CREATE statement
+		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase() + ".", "");
+		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase().toUpperCase() + ".", "");
+		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase() + "\".", "");
+		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase().toUpperCase() + "\".", "");
+		rs.close();
+		ps.close();
+		return sqlCREATE;
+	}
 
+	/**
+	 * Reverse the tables sequence to generate DROP statements.
+	 * @param list
+	 * @return the reversed list
+	 */
+	private List<String> reverseList(List<String> list) {
+		List<String> li = new ArrayList<String>();
+		ListIterator<String> iter = list.listIterator(list.size());
+		while(iter.hasPrevious()) {
+			li.add(iter.previous());
+		}
+		return li;
+	}
+	
 	@Override
 	public void doExport() throws Exception{
 		PreparedStatement ps = null;
@@ -53,12 +129,16 @@ public class DDLTransfer implements Transferable {
 			List<String> sqlList = new ArrayList<String>();
 			while(rs.next()) {
 				
-				sqlList.add(rs.getString("requesttext"));
+				//sqlList.add(rs.getString("requesttext"));
+				sqlList.add(this.showTable(rs.getString("TableName").trim(), 
+						rs.getString("TableKind").trim()));
 			}
 			// can use multi-thread, fork a new thread to write file
-			SQLWriter.setFileName(CommonConfig.path() + 
-					DBConn.getDatabase() + ".sql");
+			SQLWriter.setFileName(CommonConfig.path() + "CREATE.sql");
+					//DBConn.getDatabase() + ".sql");
 			SQLWriter.writeSQL(sqlList);
+			SQLWriter.setFileName(CommonConfig.path() + "DROP.sql");
+			SQLWriter.writeSQL(this.reverseList(this.sqlListDrop));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
@@ -87,8 +167,8 @@ public class DDLTransfer implements Transferable {
 		boolean res = false;
 		try {
 			
-			List<String> sqlList = SQLReader.readSQL(CommonConfig.path() + 
-					DBConn.getDatabase() + ".sql");
+			List<String> sqlList = SQLReader.readSQL(CommonConfig.path("CREATE.sql"));
+					//DBConn.getDatabase() + ".sql");
 			Iterator<String> it = sqlList.iterator();
 			int countAll = 1;
 			conn.setAutoCommit(false);
