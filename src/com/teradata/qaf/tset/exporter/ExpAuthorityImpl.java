@@ -46,7 +46,8 @@ public class ExpAuthorityImpl implements Authority {
 	 * @param accessRight
 	 * @throws SQLException
 	 */
-	private void check(String tableName, String userName, String accessRight) throws SQLException {
+	private void check(String tableName, String userName, String accessRight) 
+			throws SQLException {
 		// Check accessRight on specified table
 		String sql = CommonConfig.sqlQueryAccessright(tableName, userName);
 		logger.info(sql);
@@ -87,54 +88,70 @@ public class ExpAuthorityImpl implements Authority {
 	public void check() {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		boolean flag = true;// Needs Grant R
 		try {
-			
-			Iterator<MetaDB> it = this.tsetInfoTables.getMetaDBList().iterator();
-			while(it.hasNext()) {
-				MetaDB metaDB = it.next();
-				// Needs R on either ALL(all tables of specified DataBase) 
-				// or the specified table.
-				Iterator<Table> itTable = metaDB.getTableList().iterator();
-				while(itTable.hasNext()) {
-					String tableName = itTable.next().getName();
-					
-					// Check R on specified table
-					String sql = CommonConfig.sqlQueryAccessright(tableName, this.userName);
-					logger.info(sql);
-					ps = conn.prepareStatement(sql);
-					rs = ps.executeQuery();
-					boolean flag = true;
-					while(rs.next()) {
-						if(rs.getString("accessRight").trim().equalsIgnoreCase("R")) {
-							flag = false;
-							logger.info("NO Need Grant R on table: " + tableName);
-							break;
-						}
-					}
-					
-					// Check R on ALL
-					sql = CommonConfig.sqlQueryAccessrightonALL(tableName, this.userName);
-					logger.info(sql);
-					ps = conn.prepareStatement(sql);
-					rs = ps.executeQuery();
-					while(rs.next()) {
-						if(rs.getString("accessRight").trim().equalsIgnoreCase("R")) {
-							flag = false;
-							logger.info("NO Need Grant R on tables of DB: " + tableName);
-							break;
-						}
-					}
-					
-					if(flag) {
-						logger.info("Need Grant R on table: " + tableName);
-						this.needGrant.add(tableName);
-						
-					}
+			// Check R on ALL of DBC
+			String sql = CommonConfig.sqlQueryAccessrightonALL("DBC.*", this.userName);
+			logger.info(sql);
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				if(rs.getString("accessRight").trim().equalsIgnoreCase("R")) {
+					flag = false;
+					logger.info("NO Need Grant R on ALL tables of DBC.");
+					break;
 				}
-				
+			}
+			if(flag) {
+				Iterator<MetaDB> it = this.tsetInfoTables.getMetaDBList().iterator();
+				while(it.hasNext()) {
+					MetaDB metaDB = it.next();
+					// Needs R on either ALL(all tables of specified DataBase) 
+					// or the specified table.
+					Iterator<Table> itTable = metaDB.getTableList().iterator();
+					while(itTable.hasNext()) {
+						String tableName = itTable.next().getName();
+						
+						// Check R on specified table
+						sql = CommonConfig.sqlQueryAccessright(tableName, this.userName);
+						logger.info(sql);
+						ps = conn.prepareStatement(sql);
+						rs = ps.executeQuery();
+						flag = true;
+						while(rs.next()) {
+							if(rs.getString("accessRight").trim().equalsIgnoreCase("R")) {
+								flag = false;
+								logger.info("NO Need Grant R on table: " + tableName);
+								break;
+							}
+						}
+						rs.close();
+						ps.close();
+						
+						// Check R on ALL
+						sql = CommonConfig.sqlQueryAccessrightonALL(tableName, this.userName);
+						logger.info(sql);
+						ps = conn.prepareStatement(sql);
+						rs = ps.executeQuery();
+						while(rs.next()) {
+							if(rs.getString("accessRight").trim().equalsIgnoreCase("R")) {
+								flag = false;
+								logger.info("NO Need Grant R on tables of DB: " + tableName);
+								break;
+							}
+						}
+						
+						if(flag) {
+							logger.info("Need Grant R on table: " + tableName);
+							this.needGrant.add(tableName);
+							
+						}
+					}
+					
+				}
 			}
 			
-			// Check EF 
+			// Check EF on SYSLIB FUNCTIONs
 			this.check("SYSLIB.MonitorPhysicalConfig", this.userName, "EF");
 			this.check("SYSLIB.MonitorVirtualConfig", this.userName, "EF");
 			
@@ -169,7 +186,8 @@ public class ExpAuthorityImpl implements Authority {
 	 * @param accessRight
 	 * @throws SQLException
 	 */
-	private void grant(String tableName, String userName, String accessRight) throws SQLException {
+	private void grant(String tableName, String userName, String accessRight) 
+			throws SQLException {
 		PreparedStatement ps = null;
 		
 		String sql = CommonConfig.sqlGrant(tableName, userName, accessRight);
