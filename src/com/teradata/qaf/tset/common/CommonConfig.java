@@ -5,18 +5,30 @@ import com.teradata.qaf.tset.pojo.Table;
 public class CommonConfig {
 
 	// SQL statement to query DDL
-	
 	public static String sqlQueryDDL(String databaseName) {
 		String sqlQueryDDL;
 		if(databaseName.equals("")) {
-			sqlQueryDDL = "select requesttext from dbc.tables order by createtimestamp";
+			sqlQueryDDL = "select TableName, TableKind, RequestText " +
+					"from dbc.tables order by createtimestamp";
 		} else {
-			sqlQueryDDL = "select requesttext from dbc.tables " +
+			sqlQueryDDL = "select TableName, TableKind, RequestText from dbc.tables " +
 					"where databasename='" + DBConn.getDatabase() + 
 					"' order by createtimestamp";
 		}
 		return sqlQueryDDL;
 	}
+	
+	public static String sqlShowTable = "show table ";
+	public static String sqlShowView = "show view ";
+	public static String sqlShowMacro = "show macro ";
+	public static String sqlShowProcedure = "show procedure ";
+	public static String sqlShowFunction = "show function ";
+	
+	public static String sqlDropTable = "drop table ";
+	public static String sqlDropView = "drop view ";
+	public static String sqlDropMacro = "drop macro ";
+	public static String sqlDropProcedure = "drop procedure ";
+	public static String sqlDropFunction = "drop function ";
 	
 	// show table SQL statement
 	public static String sqlShowTable(String tableName) {
