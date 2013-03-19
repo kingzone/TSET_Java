@@ -1,5 +1,5 @@
 <DBConfig>
-  
+  <!--
   <DB>
     <URL>jdbc:teradata://153.64.80.50/</URL>
     <DATABASE>PCT_hist_usr</DATABASE>
@@ -8,7 +8,7 @@
     <USERNAME>PCT_hist_usr</USERNAME>
     <PASSWORD>PCThist123</PASSWORD>
   </DB>
-  <!--
+  -->
   <DB>
     <URL>jdbc:teradata://153.64.28.192/</URL>
     <DATABASE>king.test</DATABASE>
@@ -17,7 +17,7 @@
     <USERNAME>dbc</USERNAME>
     <PASSWORD>dbc</PASSWORD>
   </DB>
-  
+  <!--
   <DB>
     <URL>jdbc:teradata://153.64.80.9/</URL>
     <DATABASE>hadoop</DATABASE>

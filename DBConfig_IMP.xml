@@ -2,7 +2,7 @@
 
   <DB>
     <URL>jdbc:teradata://153.64.24.170/</URL>
-    <DATABASE>DBC</DATABASE>
+    <DATABASE>kingtest</DATABASE>
     <CHARSET>ASCII</CHARSET>
     <TMODE>TERA</TMODE>
     <USERNAME>dbc</USERNAME>
