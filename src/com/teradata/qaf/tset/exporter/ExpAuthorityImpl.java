@@ -197,6 +197,11 @@ public class ExpAuthorityImpl implements Authority {
 		ps.close();
 	}
 	
+	/**
+	 * 
+	 * @param userName
+	 * @param accessRight
+	 */
 	private void grant(String userName, String accessRight) {
 		Iterator<String> it = this.needGrantEF.iterator();
 		
@@ -259,6 +264,50 @@ public class ExpAuthorityImpl implements Authority {
 		
 	}
 
+	/**
+	 * Revoke accessRight on tableName from userName
+	 * @param tableName
+	 * @param userName
+	 * @param accessRight
+	 * @throws SQLException
+	 */
+	private void revoke(String tableName, String userName, String accessRight) 
+			throws SQLException {
+		PreparedStatement ps = null;
+		
+		String sql = CommonConfig.sqlRevoke(tableName, userName, accessRight);
+		ps = conn.prepareStatement(sql);
+		ps.execute();
+		logger.info(sql);
+		ps.close();
+	}
+	
+	/**
+	 * 
+	 * @param userName
+	 * @param accessRight
+	 */
+	private void revoke(String userName, String accessRight) {
+		Iterator<String> it = this.needGrantEF.iterator();
+		
+		while(it.hasNext()) {
+			String tableName = it.next();
+			try {
+				this.revoke(tableName, userName, accessRight);
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				logger.error(e.getMessage());
+				
+				DBConn.closeConnection(conn);
+				
+				logger.error("Revoke Export privileges ERROR, " +
+						"ROLLBACK automatically and Exit the application.");
+				System.exit(-1);
+			}
+		}
+	}
+	
 	@Override
 	public void revoke() {
 
@@ -291,6 +340,8 @@ public class ExpAuthorityImpl implements Authority {
 				}
 			}
 		}
+		// Revoke EF privilege
+		this.revoke(this.userName, "EXECUTE FUNCTION");
 	}
 
 	public Connection getConn() {
