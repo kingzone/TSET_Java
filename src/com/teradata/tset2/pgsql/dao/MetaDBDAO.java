@@ -65,7 +65,7 @@ public class MetaDBDAO extends BaseDAO {
 
         // Creating a prepared statement object from an active connection
         pstmt = con.prepareStatement(sInsert);
-        logger.info(" Prepared statement object created. \n");
+        logger.info("Prepared statement object created. ");
 
         try {
             // Set parameter values indicated by ? (dynamic update)
@@ -127,7 +127,7 @@ public class MetaDBDAO extends BaseDAO {
         finally {
             // Close the statement
             pstmt.close();
-            logger.info("\n PreparedStatement object closed.\n");
+            logger.info("PreparedStatement object closed.");
         }
     }
 }

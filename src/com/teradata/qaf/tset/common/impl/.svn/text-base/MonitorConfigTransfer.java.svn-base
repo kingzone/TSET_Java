@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.utils.TSETCSVWriter;
+import com.teradata.tset2.pgsql.dao.PhysicalConfigurationDAO;
+import com.teradata.tset2.pgsql.pojo.PhysicalConfiguration;
 
 public class MonitorConfigTransfer implements Transferable {
 
@@ -42,6 +46,29 @@ public class MonitorConfigTransfer implements Transferable {
 			TSETCSVWriter csvWriter = new TSETCSVWriter(CommonConfig.path() + 
 					CommonConfig.MonitorPhysicalConfig);
 			csvWriter.writeCSV(rs);
+			
+			// Export to PostgreSQL
+			List<PhysicalConfiguration> pcList = 
+					new ArrayList<PhysicalConfiguration>();
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				PhysicalConfiguration pc = new PhysicalConfiguration();
+				pc.setSystem_id(1);
+				pc.setProcid(rs.getInt(1));
+				pc.setStatus(rs.getString(2));
+				pc.setCPUType(rs.getString(3));
+				pc.setCPUCount(rs.getInt(4));
+				pc.setSystemType(rs.getString(5));
+				pc.setCliqueNo(rs.getInt(6));
+				pc.setNetAUP(rs.getString(7));
+				pc.setNetBUP(rs.getString(8));
+				pcList.add(pc);
+				logger.info("Add to pcList.");
+			}
+			PhysicalConfigurationDAO pcd = new PhysicalConfigurationDAO();
+			pcd.insert(pcList);
+			pcd.closeConn();
+			
 			logger.info("execute sql : " + sql);
 			
 			sql = CommonConfig.sqlQueryVirtualPhysicalConfig();
