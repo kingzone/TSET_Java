@@ -72,6 +72,11 @@ public class XmlReaderRun {
 				}
 				sql = sql.substring(0, sql.length() - 6);
 				sql += ");\",";
+				//System.out.println(sql);
+				//System.out.println();
+				
+				sql = sql.replace("BYTEINT", "SMALLINT");
+				sql = sql.replace("VARBYTE", "VARCHAR");
 				System.out.println(sql);
 				System.out.println();
 			}
