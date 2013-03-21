@@ -40,7 +40,6 @@ public class PhysicalConfigurationDAO extends BaseDAO {
 		while(it.hasNext()) {
 			PhysicalConfiguration pc = it.next();
 			this.addBatch(ps, pc);
-			logger.info(pc.getProcid());
 		}
 		logger.info(sql);
 		int []count = ps.executeBatch();

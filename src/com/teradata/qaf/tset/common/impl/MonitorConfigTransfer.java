@@ -13,7 +13,9 @@ import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.utils.TSETCSVWriter;
 import com.teradata.tset2.pgsql.dao.PhysicalConfigurationDAO;
+import com.teradata.tset2.pgsql.dao.VirtualConfigurationDAO;
 import com.teradata.tset2.pgsql.pojo.PhysicalConfiguration;
+import com.teradata.tset2.pgsql.pojo.VirtualConfiguration;
 
 public class MonitorConfigTransfer implements Transferable {
 
@@ -47,7 +49,7 @@ public class MonitorConfigTransfer implements Transferable {
 					CommonConfig.MonitorPhysicalConfig);
 			csvWriter.writeCSV(rs);
 			
-			// Export to PostgreSQL
+			// Export PhysicalConfiguration to PostgreSQL
 			List<PhysicalConfiguration> pcList = 
 					new ArrayList<PhysicalConfiguration>();
 			rs = ps.executeQuery();
@@ -71,12 +73,33 @@ public class MonitorConfigTransfer implements Transferable {
 			
 			logger.info("execute sql : " + sql);
 			
-			sql = CommonConfig.sqlQueryVirtualPhysicalConfig();
+			sql = CommonConfig.sqlQueryMonitorVirtualConfig();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			csvWriter = new TSETCSVWriter(CommonConfig.path() + 
 					CommonConfig.MonitorvirtualConfig);
 			csvWriter.writeCSV(rs);
+			
+			// Export VirtualConfiguration to PostgreSQL
+			List<VirtualConfiguration> vcList = 
+					new ArrayList<VirtualConfiguration>();
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				VirtualConfiguration vc = new VirtualConfiguration();
+				vc.setSystem_id(1);
+				vc.setProcid(rs.getInt(1));
+				vc.setVprocNo(rs.getInt(2));
+				vc.setVprocType(rs.getString(3));
+				vc.setHostid(rs.getInt(4));
+				vc.setStatus(rs.getString(5));
+				vc.setDiskSlice(rs.getInt(6));
+				vcList.add(vc);
+				logger.info("Add to vcList.");
+			}
+			VirtualConfigurationDAO vcd = new VirtualConfigurationDAO();
+			vcd.insert(vcList);
+			vcd.closeConn();
+			
 			logger.info("execute sql : " + sql);
 				
 		} catch (SQLException e) {

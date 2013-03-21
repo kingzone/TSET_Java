@@ -141,7 +141,7 @@ public class CommonConfig {
 	}
 	
 	// SQL statement to export virtual Config
-	public static String sqlQueryVirtualPhysicalConfig() { 
+	public static String sqlQueryMonitorVirtualConfig() { 
 		return "SELECT t2.* FROM TABLE (MonitorVirtualConfig()) AS t2;";
 	}
 	
