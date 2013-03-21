@@ -37,6 +37,7 @@ public class XmlReaderRun {
 				String[] s = tableName.split("\\.");
 				//String sql = "CREATE TABLE " + tableName + "(";
 				String sql = "CREATE TABLE " + s[1] + "(";
+				sql += "System_id int,";
 				Iterator<Column> it3 = table.getColumnList().iterator();
 				while(it3.hasNext()) {
 					Column col = it3.next();
@@ -65,6 +66,7 @@ public class XmlReaderRun {
 				System.out.println(comment);
 				//String sql = "CREATE TABLE " + tableName + "(";
 				String sql = "\"CREATE TABLE " + s[1] + "(\" +\n";
+				sql += "\"	System_id int,\" + \n";
 				Iterator<Column> it3 = table.getColumnList().iterator();
 				while(it3.hasNext()) {
 					Column col = it3.next();
