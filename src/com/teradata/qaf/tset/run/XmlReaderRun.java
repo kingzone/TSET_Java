@@ -45,7 +45,11 @@ public class XmlReaderRun {
 				}
 				sql = sql.substring(0, sql.length() - 1);
 				sql += ");";
+				sql = sql.replace("BYTEINT", "SMALLINT");
+				sql = sql.replace("VARBYTE", "VARCHAR");
 				System.out.println(sql);
+				String sql2 = "CREATE INDEX "+s[1]+"_on_System_id on "+s[1]+"(System_Id);";
+				System.out.println(sql2);
 			}
 			
 		}
@@ -80,7 +84,8 @@ public class XmlReaderRun {
 				sql = sql.replace("BYTEINT", "SMALLINT");
 				sql = sql.replace("VARBYTE", "VARCHAR");
 				System.out.println(sql);
-				System.out.println();
+				String sql2 = "\"CREATE INDEX "+s[1]+"_on_System_id on "+s[1]+"(System_Id);\",";
+				System.out.println(sql2);
 			}
 			
 		}
