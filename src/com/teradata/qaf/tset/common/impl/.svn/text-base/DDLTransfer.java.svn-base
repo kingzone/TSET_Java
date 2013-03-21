@@ -16,12 +16,15 @@ import com.teradata.qaf.tset.common.DBConn;
 import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.utils.SQLReader;
 import com.teradata.qaf.tset.utils.SQLWriter;
+import com.teradata.tset2.pgsql.dao.DDL_KVDAO;
+import com.teradata.tset2.pgsql.pojo.DDL_KV;
 
 public class DDLTransfer implements Transferable {
 
 	private static Logger logger = Logger.getLogger(DDLTransfer.class.getName());
 	private Connection conn;
 	private List<String> sqlListDrop;
+	private final String System_id = "00001";
 	
 	public DDLTransfer(Connection conn) {
 		this.conn = conn;
@@ -118,6 +121,9 @@ public class DDLTransfer implements Transferable {
 		return li;
 	}
 	
+	/**
+	 * Write into local files and PostgreSQL on the same time
+	 */
 	@Override
 	public void doExport() throws Exception{
 		PreparedStatement ps = null;
@@ -127,11 +133,23 @@ public class DDLTransfer implements Transferable {
 			logger.info(getGeneratedSQL());
 			rs = ps.executeQuery();
 			List<String> sqlList = new ArrayList<String>();
+			List<DDL_KV> ddlkvList = new ArrayList<DDL_KV>();
 			while(rs.next()) {
-				
 				//sqlList.add(rs.getString("requesttext"));
-				sqlList.add(this.showTable(rs.getString("TableName").trim(), 
-						rs.getString("TableKind").trim()));
+				String sql = this.showTable(rs.getString("TableName").trim(), 
+						rs.getString("TableKind").trim());
+//				sqlList.add(this.showTable(rs.getString("TableName").trim(), 
+//						rs.getString("TableKind").trim()));
+				sqlList.add(sql);
+				
+				DDL_KV ddlkv = new DDL_KV();
+				ddlkv.setKey(this.System_id + System.currentTimeMillis());
+				ddlkv.setDdl_createTimestamp(rs.getTimestamp("CreateTimestamp"));
+				logger.info(rs.getTimestamp("CreateTimestamp"));
+				logger.info(ddlkv.getDdl_createTimestamp());
+				ddlkv.setDdl_txt(sql);
+				ddlkvList.add(ddlkv);
+				
 			}
 			// can use multi-thread, fork a new thread to write file
 			SQLWriter.setFileName(CommonConfig.path() + "CREATE.sql");
@@ -139,6 +157,11 @@ public class DDLTransfer implements Transferable {
 			SQLWriter.writeSQL(sqlList);
 			SQLWriter.setFileName(CommonConfig.path() + "DROP.sql");
 			SQLWriter.writeSQL(this.reverseList(this.sqlListDrop));
+			
+			DDL_KVDAO ddlkvDao = new DDL_KVDAO();
+			ddlkvDao.insert(ddlkvList);
+			ddlkvDao.closeConn();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());

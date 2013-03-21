@@ -8,10 +8,12 @@ public class CommonConfig {
 	public static String sqlQueryDDL(String databaseName) {
 		String sqlQueryDDL;
 		if(databaseName.equals("")) {
-			sqlQueryDDL = "select TableName, TableKind, RequestText " +
+			sqlQueryDDL = "select TableName, TableKind, RequestText, " +
+					"CreateTimestamp, LastAlterTimestamp " +
 					"from dbc.tables order by createtimestamp";
 		} else {
-			sqlQueryDDL = "select TableName, TableKind, RequestText from dbc.tables " +
+			sqlQueryDDL = "select TableName, TableKind, RequestText, " +
+					"CreateTimestamp, LastAlterTimestamp from dbc.tables " +
 					"where databasename='" + DBConn.getDatabase() + 
 					"' order by createtimestamp";
 		}
