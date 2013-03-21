@@ -131,6 +131,9 @@ public class CommonConfig {
 	public static String sqlInsertMetaDB(Table table, String cols){ 
 		return "insert into " + table.getName() + " values(" + cols + ")";
 	}
+	public static String sqlInsertMetaDB(String tableName, String cols){ 
+		return "insert into " + tableName + " values(" + cols + ")";
+	}
 	
 	// SQL statement to export Physical Config
 	public static String sqlQueryMonitorPhysicalConfig() { 

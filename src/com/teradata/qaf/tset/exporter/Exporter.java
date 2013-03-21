@@ -17,6 +17,7 @@ import com.teradata.qaf.tset.pojo.MetaDB;
 import com.teradata.qaf.tset.pojo.TSETInfoTables;
 import com.teradata.qaf.tset.utils.DBConfigReader;
 import com.teradata.qaf.tset.utils.XMLReader;
+import com.teradata.tset2.pgsql.dao.MetaDBDAO;
 
 public class Exporter {
 
@@ -87,6 +88,9 @@ public class Exporter {
 				RecordTransfer recordTransfer = new RecordTransfer(metaDB, conn);
 				recordTransfer.doExport();
 				
+				MetaDBDAO mdd = new MetaDBDAO();
+				mdd.insert(metaDB);
+				mdd.closeConn();
 			}
 		} catch (Exception e) {
 			try {
