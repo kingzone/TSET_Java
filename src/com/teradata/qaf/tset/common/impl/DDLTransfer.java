@@ -79,6 +79,7 @@ public class DDLTransfer implements Transferable {
 					"\"" + TableName + "\"");
 			break;
 		case "D":
+			logger.info(" -- TableKind is D, SKIP. -- ");
 			break;
 		case "R":
 		case "F":
@@ -89,21 +90,26 @@ public class DDLTransfer implements Transferable {
 		default:
 			break;
 		}
+		logger.info(sql);
 		if(sql == null) return null;
 		ps = conn.prepareStatement(sql);
-		logger.info(sql);
+		//logger.info(sql);
 		rs = ps.executeQuery();
 		while(rs.next()) {
-			sqlCREATE = rs.getString(1);
+			// Be careful, replace = with +=
+			sqlCREATE += rs.getString(1);
 		}
 		
 		// Remove the DB name in the CREATE statement
 		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase() + ".", "");
+		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase().toLowerCase() + ".", "");
 		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase().toUpperCase() + ".", "");
 		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase() + "\".", "");
+		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase().toLowerCase() + "\".", "");
 		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase().toUpperCase() + "\".", "");
 		rs.close();
 		ps.close();
+		
 		return sqlCREATE;
 	}
 
@@ -148,6 +154,7 @@ public class DDLTransfer implements Transferable {
 				//logger.info(rs.getTimestamp("CreateTimestamp"));
 				//logger.info(ddlkv.getDdl_createTimestamp());
 				ddlkv.setDdl_txt(sql);
+				//logger.info(sql);
 				ddlkvList.add(ddlkv);
 				
 			}
