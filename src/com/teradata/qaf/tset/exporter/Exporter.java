@@ -25,6 +25,8 @@ public class Exporter {
 	
 	private TSETInfoTables tsetInfoTables;
 	
+	private boolean exportPVConfig;
+	
 	// initialize 
 	public void initialize(String ConfigFileName) {
 		
@@ -59,7 +61,7 @@ public class Exporter {
 		// check Authority
 		ExpAuthorityImpl expAu = new ExpAuthorityImpl(conn, tsetInfoTables, 
 				DBConn.getDatabase(), DBConn.getUsername());
-		expAu.check();
+		expAu.check(this.isExportPVConfig());
 		expAu.grant();
 		
 		// export DDL
@@ -107,22 +109,25 @@ public class Exporter {
 		}
 		
 		//export physical/virtual config
-		MonitorConfigTransfer monitorConfigTransfer = new MonitorConfigTransfer(conn); 
-		try {
-			monitorConfigTransfer.doExport();
-		} catch (Exception e) {
-			
+		if(this.isExportPVConfig()) {
+			MonitorConfigTransfer monitorConfigTransfer = 
+					new MonitorConfigTransfer(conn); 
 			try {
-				if(conn != null && !conn.isClosed()) conn.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+				monitorConfigTransfer.doExport();
+			} catch (Exception e) {
+				
+				try {
+					if(conn != null && !conn.isClosed()) conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
+				logger.error("ERROR while exporting MonitorXXXConfig, " +
+						"ROLLBACK automatically and EXIT the Application.");
+				ExpRollBackImpl expRollBack = new ExpRollBackImpl(expAu);
+				expRollBack.doRollBack();
+				System.exit(-1);
 			}
-			e.printStackTrace();
-			logger.error("ERROR while exporting MonitorXXXConfig, " +
-					"ROLLBACK automatically and EXIT the Application.");
-			ExpRollBackImpl expRollBack = new ExpRollBackImpl(expAu);
-			expRollBack.doRollBack();
-			System.exit(-1);
 		}
 		
 		expAu.revoke();
@@ -132,6 +137,14 @@ public class Exporter {
 		// zip the TSETInfoTables directory
 		
 		
+	}
+
+	public boolean isExportPVConfig() {
+		return exportPVConfig;
+	}
+
+	public void setExportPVConfig(boolean exportPVConfig) {
+		this.exportPVConfig = exportPVConfig;
 	}
 	
 }

@@ -87,6 +87,10 @@ public class ExpAuthorityImpl implements Authority {
 	
 	@Override
 	public void check() {
+		check(true);
+	}
+	
+	public void check(boolean checkEF) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		boolean flag = true;// Needs Grant R
@@ -153,9 +157,10 @@ public class ExpAuthorityImpl implements Authority {
 			}
 			
 			// Check EF on SYSLIB FUNCTIONs
-			this.check("SYSLIB.MonitorPhysicalConfig", this.userName, "EF");
-			this.check("SYSLIB.MonitorVirtualConfig", this.userName, "EF");
-			
+			if(checkEF) {
+				this.check("SYSLIB.MonitorPhysicalConfig", this.userName, "EF");
+				this.check("SYSLIB.MonitorVirtualConfig", this.userName, "EF");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
@@ -199,7 +204,7 @@ public class ExpAuthorityImpl implements Authority {
 	}
 	
 	/**
-	 * 
+	 * Grant EXECUTE FUNCTION privilege to userName on tableNames
 	 * @param userName
 	 * @param accessRight
 	 */

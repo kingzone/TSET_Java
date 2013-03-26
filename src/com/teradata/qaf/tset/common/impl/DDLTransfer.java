@@ -145,8 +145,8 @@ public class DDLTransfer implements Transferable {
 				DDL_KV ddlkv = new DDL_KV();
 				ddlkv.setKey(this.System_id + System.currentTimeMillis());
 				ddlkv.setDdl_createTimestamp(rs.getTimestamp("CreateTimestamp"));
-				logger.info(rs.getTimestamp("CreateTimestamp"));
-				logger.info(ddlkv.getDdl_createTimestamp());
+				//logger.info(rs.getTimestamp("CreateTimestamp"));
+				//logger.info(ddlkv.getDdl_createTimestamp());
 				ddlkv.setDdl_txt(sql);
 				ddlkvList.add(ddlkv);
 				

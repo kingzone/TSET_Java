@@ -46,11 +46,12 @@ public class DDL_KVDAO extends BaseDAO {
 		while(it.hasNext()) {
 			DDL_KV ddlkv = it.next();
 			this.addBatch(ps, ddlkv);
-			logger.info(ddlkv.getKey());
+			//logger.info(ddlkv.getKey());
 		}
 		logger.info(sql);
-		ps.executeBatch();
+		int []count = ps.executeBatch();
 		super.conn.commit();
+		logger.info("Totally insert " + count.length + " DDL statements.");
 		if(ps!=null && !ps.isClosed()) ps.close();
 	}
 	

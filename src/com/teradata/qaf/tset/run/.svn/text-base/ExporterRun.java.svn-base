@@ -17,6 +17,17 @@ public class ExporterRun {
 		//exporter.initialize("ConfFile_schema.xml");
 		exporter.initialize(CommonConfig.ConfFile_schema("14.00"));
 		//exporter.doTDExport();
+		exporter.setExportPVConfig(true);
+		if(args.length > 0) {
+			switch(args[0]) {
+			case "EF":
+				exporter.setExportPVConfig(false);
+				logger.info("Will NOT check EF and export p/v Config.");
+				break;
+			default:
+				break;
+			}
+		}
 		exporter.doTDExportAll();
 		
 		logger.info("Export success.");
