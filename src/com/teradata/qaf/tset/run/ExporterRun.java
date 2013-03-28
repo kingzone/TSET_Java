@@ -15,7 +15,8 @@ public class ExporterRun {
 		long starttime = System.currentTimeMillis();
 		Exporter exporter = new Exporter();
 		//exporter.initialize("ConfFile_schema.xml");
-		exporter.initialize(CommonConfig.ConfFile_schema("14.00"));
+		//exporter.initialize(CommonConfig.ConfFile_schema("14.00"));
+		exporter.initialize(CommonConfig.ConfFile_schema("13.10"));
 		//exporter.doTDExport();
 		exporter.setExportPVConfig(true);
 		if(args.length > 0) {

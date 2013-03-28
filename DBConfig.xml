@@ -2,13 +2,22 @@
   <!--
   <DB>
     <URL>jdbc:teradata://153.65.197.23/</URL>
-    <DATABASE>DBC</DATABASE>
+    <DATABASE>PCT_wellpoint_sar_ncr_db</DATABASE>
     <CHARSET>ASCII</CHARSET>
     <TMODE>TERA</TMODE>
     <USERNAME>dbc</USERNAME>
     <PASSWORD>dbc</PASSWORD>
   </DB>
   -->
+  <DB>
+    <URL>jdbc:teradata://153.65.197.23/</URL>
+    <DATABASE>uschema2_ix</DATABASE>
+    <CHARSET>ASCII</CHARSET>
+    <TMODE>TERA</TMODE>
+    <USERNAME>dbc</USERNAME>
+    <PASSWORD>dbc</PASSWORD>
+  </DB>
+  <!--
   <DB>
     <URL>jdbc:teradata://153.64.80.50/</URL>
     <DATABASE>PCT_hist_usr</DATABASE>
@@ -17,6 +26,7 @@
     <USERNAME>PCT_hist_usr</USERNAME>
     <PASSWORD>PCThist123</PASSWORD>
   </DB>
+  -->
   <!--
   <DB>
     <URL>jdbc:teradata://153.64.28.192/</URL>
