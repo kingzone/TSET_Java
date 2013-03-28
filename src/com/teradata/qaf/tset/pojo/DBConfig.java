@@ -7,6 +7,7 @@ public class DBConfig {
 	private String tmode = "TERA";
 	private String username = "dbc";
 	private String password = "dbc";
+	private int System_id;
 	public String getUrl() {
 		return url;
 	}
@@ -43,6 +44,10 @@ public class DBConfig {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+	public int getSystem_id() {
+		return System_id;
+	}
+	public void setSystem_id(int system_id) {
+		System_id = system_id;
+	}
 }

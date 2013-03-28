@@ -25,7 +25,13 @@ public class Exporter {
 	
 	private TSETInfoTables tsetInfoTables;
 	
-	private boolean exportPVConfig;
+	// true: export Physical and Virtual Config
+	private boolean exportPVConfig = true;
+	
+	// F: insert into Postgres via CSV files
+	private boolean isF = false;
+	
+	//private int System_id;
 	
 	// initialize 
 	public void initialize(String ConfigFileName) {
@@ -66,6 +72,7 @@ public class Exporter {
 		
 		// export DDL
 		DDLTransfer ddlTransfer = new DDLTransfer(conn);
+		ddlTransfer.setSystem_id(dbConfig.getSystem_id());
 		try {
 			ddlTransfer.doExport();
 		} catch (Exception e) {
@@ -91,7 +98,9 @@ public class Exporter {
 				recordTransfer.doExport();
 				
 				MetaDBDAO mdd = new MetaDBDAO();
-				mdd.insert(metaDB);
+				mdd.setSystem_id(dbConfig.getSystem_id());
+				if(this.isF()) mdd.insert(metaDB);
+				else mdd.insertByRs(metaDB, conn);
 				mdd.closeConn();
 			}
 		} catch (Exception e) {
@@ -112,6 +121,7 @@ public class Exporter {
 		if(this.isExportPVConfig()) {
 			MonitorConfigTransfer monitorConfigTransfer = 
 					new MonitorConfigTransfer(conn); 
+			monitorConfigTransfer.setSystem_id(dbConfig.getSystem_id());
 			try {
 				monitorConfigTransfer.doExport();
 			} catch (Exception e) {
@@ -146,5 +156,13 @@ public class Exporter {
 	public void setExportPVConfig(boolean exportPVConfig) {
 		this.exportPVConfig = exportPVConfig;
 	}
-	
+
+	public boolean isF() {
+		return isF;
+	}
+
+	public void setF(boolean isF) {
+		this.isF = isF;
+	}
+
 }

@@ -21,6 +21,7 @@ public class MonitorConfigTransfer implements Transferable {
 
 	private static Logger logger = Logger.getLogger(MonitorConfigTransfer.class.getName());
 	private Connection conn = null;
+	private int System_id = 10001;
 	
 	public MonitorConfigTransfer() {
 		
@@ -55,7 +56,7 @@ public class MonitorConfigTransfer implements Transferable {
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				PhysicalConfiguration pc = new PhysicalConfiguration();
-				pc.setSystem_id(1);
+				pc.setSystem_id(this.System_id);
 				pc.setProcid(rs.getInt(1));
 				pc.setStatus(rs.getString(2));
 				pc.setCPUType(rs.getString(3));
@@ -89,7 +90,7 @@ public class MonitorConfigTransfer implements Transferable {
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				VirtualConfiguration vc = new VirtualConfiguration();
-				vc.setSystem_id(1);
+				vc.setSystem_id(this.System_id);
 				vc.setProcid(rs.getInt(1));
 				vc.setVprocNo(rs.getInt(2));
 				vc.setVprocType(rs.getString(3));
@@ -127,6 +128,14 @@ public class MonitorConfigTransfer implements Transferable {
 	@Override
 	public void doImport() {
 
+	}
+
+	public int getSystem_id() {
+		return System_id;
+	}
+
+	public void setSystem_id(int system_id) {
+		System_id = system_id;
 	}
 
 }

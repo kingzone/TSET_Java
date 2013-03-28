@@ -26,9 +26,10 @@ public class DDL_KVDAO extends BaseDAO {
 	public PreparedStatement addBatch(PreparedStatement ps, DDL_KV ddlkv) 
 			throws SQLException {
 		ps.setString(1, ddlkv.getKey());
-		ps.setTimestamp(2, (Timestamp) ddlkv.getDdl_createTimestamp());
+		ps.setInt(2, ddlkv.getSystem_id());
+		ps.setTimestamp(3, (Timestamp) ddlkv.getDdl_createTimestamp());
 		//logger.info(ddlkv.getDdl_createTimestamp());
-		ps.setString(3, ddlkv.getDdl_txt());
+		ps.setString(4, ddlkv.getDdl_txt());
 		ps.addBatch();
 		return ps;
 	}
@@ -38,8 +39,8 @@ public class DDL_KVDAO extends BaseDAO {
 //	}
 	
 	public void insert(List<DDL_KV> ddlkvs) throws SQLException {
-		String sql = "insert into DDL_KV(key, ddl_createtimestamp, ddl_text) " +
-				"values(?, ?, ?)";
+		String sql = "insert into DDL_KV(key, System_id, " +
+				"ddl_createtimestamp, ddl_text) values(?, ?, ?, ?)";
 		PreparedStatement ps = super.conn.prepareStatement(sql);
 		super.conn.setAutoCommit(false);
 		Iterator<DDL_KV> it = ddlkvs.iterator();
@@ -57,7 +58,8 @@ public class DDL_KVDAO extends BaseDAO {
 	
 	public void insert(DDL_KV ddlkv) {
 		String sql = "insert into DDL_KV values('" + 
-				ddlkv.getKey() + "', '" + 
+				ddlkv.getKey() + "', " +
+				ddlkv.getSystem_id() + ", '" + 
 				ddlkv.getDdl_createTimestamp() + "', '" + 
 				ddlkv.getDdl_txt() + "')";
 		super.execSQL(sql);

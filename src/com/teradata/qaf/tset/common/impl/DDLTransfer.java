@@ -24,7 +24,7 @@ public class DDLTransfer implements Transferable {
 	private static Logger logger = Logger.getLogger(DDLTransfer.class.getName());
 	private Connection conn;
 	private List<String> sqlListDrop;
-	private final String System_id = "00001";
+	private int System_id = 10001;
 	
 	public DDLTransfer(Connection conn) {
 		this.conn = conn;
@@ -149,7 +149,8 @@ public class DDLTransfer implements Transferable {
 				sqlList.add(sql);
 				
 				DDL_KV ddlkv = new DDL_KV();
-				ddlkv.setKey(this.System_id + System.currentTimeMillis());
+				ddlkv.setKey(this.System_id + "" + System.currentTimeMillis());
+				ddlkv.setSystem_id(this.System_id);
 				ddlkv.setDdl_createTimestamp(rs.getTimestamp("CreateTimestamp"));
 				//logger.info(rs.getTimestamp("CreateTimestamp"));
 				//logger.info(ddlkv.getDdl_createTimestamp());
@@ -230,6 +231,14 @@ public class DDLTransfer implements Transferable {
 			}
 		}
 		
+	}
+
+	public int getSystem_id() {
+		return System_id;
+	}
+
+	public void setSystem_id(int system_id) {
+		System_id = system_id;
 	}
 	
 }

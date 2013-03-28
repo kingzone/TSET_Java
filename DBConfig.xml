@@ -16,6 +16,7 @@
     <TMODE>TERA</TMODE>
     <USERNAME>dbc</USERNAME>
     <PASSWORD>dbc</PASSWORD>
+    <System_id>10000001</System_id>
   </DB>
   <!--
   <DB>

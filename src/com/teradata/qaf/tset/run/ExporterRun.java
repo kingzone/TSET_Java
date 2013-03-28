@@ -29,6 +29,19 @@ public class ExporterRun {
 				break;
 			}
 		}
+		
+		exporter.setF(false);
+		if(args.length >= 2) {
+			switch(args[1]) {
+			case "F":
+				exporter.setF(true);
+				logger.info("Insert metaDBs' tables into Postgres via CSV files.");
+				break;
+			default:
+				break;
+			}
+		}
+		
 		exporter.doTDExportAll();
 		
 		logger.info("Export success.");

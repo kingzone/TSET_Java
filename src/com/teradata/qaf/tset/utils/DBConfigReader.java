@@ -40,26 +40,33 @@ public class DBConfigReader {
 					// The CRLF character will be treated as a node, so using IF.
 					if (DBElementNode.hasChildNodes()) {
 						
-						//System.out.println(DBElementNode.getNodeName() + ":" + DBElementNode.getTextContent());
-						//System.out.println(m);
 						if (DBElementNode.getNodeName().equals("URL")) {
 							//url = DBElementNode.getTextContent();
 							dbConfig.setUrl(DBElementNode.getTextContent());
-						} else if (DBElementNode.getNodeName().equalsIgnoreCase("DATABASE")) {
+						} else if (DBElementNode.getNodeName().
+								equalsIgnoreCase("DATABASE")) {
 							//database = DBElementNode.getTextContent();
 							dbConfig.setDatabase(DBElementNode.getTextContent());
-						} else if (DBElementNode.getNodeName().equalsIgnoreCase("CHARSET")) {
+						} else if (DBElementNode.getNodeName().
+								equalsIgnoreCase("CHARSET")) {
 							//charset = DBElementNode.getTextContent();
 							dbConfig.setCharset(DBElementNode.getTextContent());
-						} else if (DBElementNode.getNodeName().equalsIgnoreCase("TMODE")) {
+						} else if (DBElementNode.getNodeName().
+								equalsIgnoreCase("TMODE")) {
 							//tmode = DBElementNode.getTextContent();
 							dbConfig.setTmode(DBElementNode.getTextContent());
-						} else if (DBElementNode.getNodeName().equalsIgnoreCase("USERNAME")) {
+						} else if (DBElementNode.getNodeName().
+								equalsIgnoreCase("USERNAME")) {
 							//username = DBElementNode.getTextContent();
 							dbConfig.setUsername(DBElementNode.getTextContent());
-						} else if (DBElementNode.getNodeName().equalsIgnoreCase("PASSWORD")) {
+						} else if (DBElementNode.getNodeName().
+								equalsIgnoreCase("PASSWORD")) {
 							//password = DBElementNode.getTextContent();
 							dbConfig.setPassword(DBElementNode.getTextContent());
+						} else if (DBElementNode.getNodeName().
+								equalsIgnoreCase("System_id")) {
+							dbConfig.setSystem_id(Integer.parseInt(
+									DBElementNode.getTextContent()));
 						} else {
 							logger.error("unknown DB config info.");
 						}
