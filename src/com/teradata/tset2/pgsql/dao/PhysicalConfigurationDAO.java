@@ -22,18 +22,25 @@ public class PhysicalConfigurationDAO extends BaseDAO {
 		ps.setString(3, pc.getStatus());
 		ps.setString(4, pc.getCPUType());
 		ps.setInt(5, pc.getCPUCount());
-		ps.setString(6, pc.getSystemType());
-		ps.setInt(7, pc.getCliqueNo());
-		ps.setString(8, pc.getNetAUP());
-		ps.setString(9, pc.getNetBUP());
+		
+		// for 14.00
+		//ps.setString(6, pc.getSystemType());
+		//ps.setInt(7, pc.getCliqueNo());
+		//ps.setString(8, pc.getNetAUP());
+		//ps.setString(9, pc.getNetBUP());
 		
 		ps.addBatch();
 		return ps;
 	}
 	
 	public void insert(List<PhysicalConfiguration> pcList) throws SQLException {
+		// for 14.00
+		//String sql = "insert into PhysicalConfiguration " +
+		//		"values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		// for 13.10
 		String sql = "insert into PhysicalConfiguration " +
-				"values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						"values(?, ?, ?, ?, ?)";
 		PreparedStatement ps = super.conn.prepareStatement(sql);
 		super.conn.setAutoCommit(false);
 		Iterator<PhysicalConfiguration> it = pcList.iterator();

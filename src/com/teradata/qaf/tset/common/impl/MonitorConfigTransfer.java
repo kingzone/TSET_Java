@@ -60,10 +60,13 @@ public class MonitorConfigTransfer implements Transferable {
 				pc.setStatus(rs.getString(2));
 				pc.setCPUType(rs.getString(3));
 				pc.setCPUCount(rs.getInt(4));
-				pc.setSystemType(rs.getString(5));
+				
+				// for 14.00
+				/*pc.setSystemType(rs.getString(5));
 				pc.setCliqueNo(rs.getInt(6));
 				pc.setNetAUP(rs.getString(7));
-				pc.setNetBUP(rs.getString(8));
+				pc.setNetBUP(rs.getString(8));*/
+				
 				pcList.add(pc);
 				logger.info("Add to pcList.");
 			}
