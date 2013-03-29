@@ -57,7 +57,8 @@ public class DDLTransfer implements Transferable {
 		ResultSet rs = null;
 		String sql = null;
 		switch(TableKind) {
-		case "T":
+		case "T":// SET TABLE
+		case "O":// MULTISET TABLE
 			sql = CommonConfig.sqlShowTable + "\"" + TableName + "\"";
 			this.sqlListDrop.add(CommonConfig.sqlDropTable + 
 					"\"" + TableName + "\"");
@@ -88,6 +89,8 @@ public class DDLTransfer implements Transferable {
 					"\"" + TableName + "\"");
 			break;
 		default:
+			logger.info(" -- TableKind " + TableKind + 
+					" is NOT supported, SKIP. -- ");
 			break;
 		}
 		logger.info(sql);
@@ -101,12 +104,12 @@ public class DDLTransfer implements Transferable {
 		}
 		
 		// Remove the DB name in the CREATE statement
-		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase() + ".", "");
-		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase().toLowerCase() + ".", "");
-		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase().toUpperCase() + ".", "");
-		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase() + "\".", "");
-		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase().toLowerCase() + "\".", "");
-		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase().toUpperCase() + "\".", "");
+//		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase() + ".", "");
+//		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase().toLowerCase() + ".", "");
+//		sqlCREATE = sqlCREATE.replace(DBConn.getDatabase().toUpperCase() + ".", "");
+//		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase() + "\".", "");
+//		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase().toLowerCase() + "\".", "");
+//		sqlCREATE = sqlCREATE.replace("\"" + DBConn.getDatabase().toUpperCase() + "\".", "");
 		rs.close();
 		ps.close();
 		
@@ -230,6 +233,10 @@ public class DDLTransfer implements Transferable {
 				logger.error(e.getMessage());
 			}
 		}
+		
+	}
+	
+	public void doImportFromPg() {
 		
 	}
 

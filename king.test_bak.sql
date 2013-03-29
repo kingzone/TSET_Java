@@ -1,7 +1,7 @@
 --create the test database
 
 create database "king.test" from dbc as permanent = 500000;
-
+create database kingtest from dbc as permanent = 500000000;
 Modify database kingtest as perm=300000000;
 
 create table test1 (t1 integer);
