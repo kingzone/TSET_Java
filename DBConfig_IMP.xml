@@ -1,5 +1,6 @@
 <DBConfig>
-
+  <!-- 14.00 -->
+  <!-- 
   <DB>
     <URL>jdbc:teradata://153.64.24.170/</URL>
     <DATABASE>kingtest</DATABASE>
@@ -8,16 +9,33 @@
     <USERNAME>dbc</USERNAME>
     <PASSWORD>dbc</PASSWORD>
   </DB>
-  <!--
+  -->
+  
+  <!-- Emulation 13.10 -->
+  <!-- -->
   <DB>
     <URL>jdbc:teradata://153.65.197.26/</URL>
+    <DATABASE>kingtest</DATABASE>
+    <CHARSET>ASCII</CHARSET>
+    <TMODE>TERA</TMODE>
+    <USERNAME>dbc</USERNAME>
+    <PASSWORD>dbc</PASSWORD>
+  </DB>
+  
+  
+  <!-- Upgrade 14.00 -->
+  <!--
+  <DB>
+    <URL>jdbc:teradata://153.65.197.21/</URL>
     <DATABASE>???</DATABASE>
     <CHARSET>ASCII</CHARSET>
     <TMODE>TERA</TMODE>
     <USERNAME>dbc</USERNAME>
     <PASSWORD>dbc</PASSWORD>
   </DB>
-
+  -->
+  
+  <!--
   <DB>
     <URL>jdbc:teradata://153.64.28.192/</URL>
     <DATABASE>king.test</DATABASE>
