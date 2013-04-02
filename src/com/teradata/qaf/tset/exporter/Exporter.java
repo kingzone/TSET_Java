@@ -10,6 +10,7 @@ import com.teradata.qaf.tset.common.CommonConfig;
 import com.teradata.qaf.tset.common.DBConn;
 import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.common.impl.DDLTransfer;
+import com.teradata.qaf.tset.common.impl.DbcInfoTblTransfer;
 import com.teradata.qaf.tset.common.impl.MonitorConfigTransfer;
 import com.teradata.qaf.tset.common.impl.RecordTransfer;
 import com.teradata.qaf.tset.pojo.DBConfig;
@@ -138,6 +139,24 @@ public class Exporter {
 				expRollBack.doRollBack();
 				System.exit(-1);
 			}
+		}
+		
+		// export DBC.dbcinfotbl
+		DbcInfoTblTransfer dbcInfoTblTransfer = new DbcInfoTblTransfer(conn);
+		try {
+			dbcInfoTblTransfer.doExport();
+		} catch (Exception e) {
+			try {
+				if(conn != null && !conn.isClosed()) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			logger.error("ERROR while exporting dbcinfotbl, " +
+					"ROLLBACK automatically and EXIT the Application.");
+			ExpRollBackImpl expRollBack = new ExpRollBackImpl(expAu);
+			expRollBack.doRollBack();
+			System.exit(-1);
 		}
 		
 		expAu.revoke();
