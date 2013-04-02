@@ -19,8 +19,13 @@ public class ImporterRun {
 		Importer importer = new Importer();
 		//importer.initialize("ConfFile_schema.xml", "input.csv");
 		//importer.initialize("ConfFile_schema_13.10.xml");
+		logger.info("Now import to Emulation system.");
 		importer.initialize(CommonConfig.ConfFile_schema("13.10"));
 		importer.doTDImport();
+		
+		logger.info("Now import to Upgrated system.");
+		importer.initialize(CommonConfig.ConfFile_schema("14.00"));
+		importer.doTDImport2Upgrated();
 		
 		logger.info("Import success.");
 		long endtime = System.currentTimeMillis();

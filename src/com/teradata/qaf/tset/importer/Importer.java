@@ -10,8 +10,10 @@ import com.teradata.qaf.tset.common.DBConn;
 import com.teradata.qaf.tset.common.Transferable;
 import com.teradata.qaf.tset.common.impl.DDLTransfer;
 import com.teradata.qaf.tset.common.impl.RecordTransfer;
+import com.teradata.qaf.tset.pojo.DBConfig;
 import com.teradata.qaf.tset.pojo.MetaDB;
 import com.teradata.qaf.tset.pojo.TSETInfoTables;
+import com.teradata.qaf.tset.utils.DBConfigReader;
 import com.teradata.qaf.tset.utils.XMLReader;
 
 public class Importer {
@@ -32,14 +34,16 @@ public class Importer {
 		return null;
 	}
 	
-	// export DDL, CostProfiles, CostParameters, RAS and physical/virtual config, in metaDB level
+	// export DDL, CostProfiles, CostParameters, 
+	// RAS and physical/virtual config, in metaDB level
 	public void doTDImport() {
 		Connection conn = DBConn.getConnection();
 		
 		// UnZip the TSETInfoTables directory
 		
 		// check Authority
-		ImpAuthorityImpl impAu = new ImpAuthorityImpl(conn, tsetInfoTables, DBConn.getDatabase(), DBConn.getUsername());
+		ImpAuthorityImpl impAu = new ImpAuthorityImpl(conn, 
+				tsetInfoTables, DBConn.getDatabase(), DBConn.getUsername());
 		impAu.check();
 		impAu.grant();
 		
@@ -69,6 +73,72 @@ public class Importer {
 				logger.info("Now tackling MetaDB: " + metaDB.getName());
 				RecordTransfer recordTransfer = new RecordTransfer(metaDB, conn);
 				recordTransfer.doImport();
+				
+			}
+		} catch (Exception e) {
+			try {
+				if(conn != null && !conn.isClosed()) conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			logger.error("ERROR while importing metaDBs, ROLLBACK automatically " +
+					"and EXIT the Application.");
+			ImpRollBackImpl impRollBack = new ImpRollBackImpl(impAu);
+			impRollBack.setTsetInfoTables(tsetInfoTables);
+			impRollBack.setConn(conn);
+			impRollBack.doRollBack();
+			System.exit(-1);
+		}
+		
+		// import physical/virtual config
+		
+		impAu.revoke();
+		
+		DBConn.closeConnection(conn);
+		
+	}
+	
+	// import to Upgrated system (14.00)
+	public void doTDImport2Upgrated() {
+		List<DBConfig> dbConfigList = 
+				DBConfigReader.initDBConfig("DBConfig_Upgrated.xml");
+		Connection conn = DBConn.getConnection(dbConfigList.get(0));
+		
+		// UnZip the TSETInfoTables directory
+		
+		// check Authority
+		ImpAuthorityImpl impAu = new ImpAuthorityImpl(conn, 
+				tsetInfoTables, DBConn.getDatabase(), DBConn.getUsername());
+		impAu.check();
+		impAu.grant();
+		
+		// import DDL
+		DDLTransfer ddlTransfer = new DDLTransfer(conn);
+		try {
+			ddlTransfer.doImport();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			try {
+				if(conn != null && !conn.isClosed()) conn.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+			
+			logger.error("ERROR while importing DDLs, ROLLBACK automatically " +
+					"and EXIT the Application." + e1.getMessage());
+			ImpRollBackImpl impRollBack = new ImpRollBackImpl(impAu);
+			impRollBack.doRollBack();
+			System.exit(-1);
+		}
+		
+		// import CostProfiles, CostParameters, RAS
+		try {
+			for(MetaDB metaDB : tsetInfoTables.getMetaDBList()) {
+				// tackle tables of each metaDB
+				logger.info("Now tackling MetaDB: " + metaDB.getName());
+				RecordTransfer recordTransfer = new RecordTransfer(metaDB, conn);
+				recordTransfer.doImport2Upgrated();
 				
 			}
 		} catch (Exception e) {

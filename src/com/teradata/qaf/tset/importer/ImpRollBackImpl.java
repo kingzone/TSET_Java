@@ -47,15 +47,15 @@ public class ImpRollBackImpl implements RollBack {
 	public void doRollBack() {
 		// drop tables, delete records, revoke if necessary
 		
-		this.dropDDLs();
+//		this.dropDDLs();
 		logger.info("RollBack: Drop tables success.");
 		
-		try {
-			this.deleteMetaDBRecords();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
-		}
+//		try {
+//			this.deleteMetaDBRecords();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			logger.error(e.getMessage());
+//		}
 		logger.info("RollBack: Delete metaDBs' records success.");
 		
 		this.au.revoke();
@@ -69,7 +69,8 @@ public class ImpRollBackImpl implements RollBack {
 		for(MetaDB metaDB : tsetInfoTables.getMetaDBList()) {
 			logger.info("Now clearing MetaDB: " + metaDB.getName());
 			for(Table table : metaDB.getTableList()) {
-				PreparedStatement ps = conn.prepareStatement(CommonConfig.sqlClearMetaDBTable(table));
+				PreparedStatement ps = conn.prepareStatement(
+						CommonConfig.sqlClearMetaDBTable(table));
 				ps.execute();
 				ps.close();
 			}

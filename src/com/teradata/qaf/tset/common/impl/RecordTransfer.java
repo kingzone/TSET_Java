@@ -350,5 +350,120 @@ public class RecordTransfer implements Transferable {
 		}
 		return failedParameterSets;
 	}
+    
+    
+    // import to upgrated system
+    public void doImport2Upgrated() throws SQLException {
+		logger.info("Now import metaDB: " + this.metaDB.getName());
+		for(Table table : metaDB.getTableList()) {
+			//if (!table.getName().equals("DBC.CostProfiles")) continue;
+			// read the exported files
+			TSETCSVReader csvReader = new TSETCSVReader();
+			List<String[]> recordList = csvReader.readCSV(CommonConfig.path() + 
+					metaDB.getName() + "/" + table.getName() + ".csv");
+			
+			// generate SQL statements
+			String sql = this.generateSQL(table, IMPORT);
+			try {
+				logger.info("Now importing table: " + table.getName());
+				this.executeBatchRequest2(this.conn, sql, table, recordList);
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				logger.error(e.getMessage());
+				logger.error("ERROR while importing metaDBs, ROLLBACK automatically " +
+						"and handle the exception outside.");
+				throw new SQLException();
+				
+			}
+		}
+	}
+    
+    // for Upgrated system 14.00
+    private void executeBatchRequest2(
+			Connection con, 
+			String sInsert, 
+			Table table, 
+			List<String[]> recordList) throws SQLException
+	{
+		PreparedStatement pstmt;
+		logger.info(" Preparing this SQL statement for execution:\n " + sInsert);
+
+        // Creating a prepared statement object from an active connection
+        pstmt = con.prepareStatement(sInsert);
+        logger.info(" Prepared statement object created. \n");
+
+        try {
+            // Set parameter values indicated by ? (dynamic update)
+            for (int nRecordCnt = 0; 
+            		nRecordCnt < recordList.size(); 
+            		nRecordCnt++) {
+            	// skip the table header row
+            	if (nRecordCnt == 0) continue;
+            	int delta = 0;// for 14.00 has 2 more columns
+                for (int nItemCnt = 0; 
+                		nItemCnt < recordList.get(nRecordCnt).length && 
+                		nItemCnt < table.getColumnList().size(); 
+                		nItemCnt++) {
+                	
+                	// 14.00 has 2 more columns
+                	if(table.getName().equals("SystemFE.Opt_RAS_Table") && 
+                			(nItemCnt == 10 || nItemCnt == 11)) {
+                		pstmt.setFloat(nItemCnt + 1, 0);
+                		//pstmt.setNull(nItemCnt + 1, sqlType);
+                		++ delta;
+                		continue;
+                	}
+                    // setXXX according to the column type
+                	Column column = table.getColumnList().get(nItemCnt);
+                	if(column.getType().equalsIgnoreCase("INTEGER") || 
+                			column.getType().equalsIgnoreCase("SMALLINT") || 
+                			column.getType().equalsIgnoreCase("BYTEINT")) {
+                		pstmt.setInt(nItemCnt + 1, Integer.parseInt(
+                				recordList.get(nRecordCnt)[nItemCnt-delta]));
+                	} else if (column.getType().equalsIgnoreCase("FLOAT")) {
+                		// empty string
+                		if (recordList.get(nRecordCnt)[nItemCnt].equals("")) {
+                			pstmt.setFloat(nItemCnt + 1, 0);
+                		} else {
+                			pstmt.setFloat(nItemCnt + 1, Float.parseFloat(
+                					recordList.get(nRecordCnt)[nItemCnt-delta]));
+                		}
+                	} else {
+                		pstmt.setString(nItemCnt + 1, 
+                				recordList.get(nRecordCnt)[nItemCnt-delta]);
+                	}
+                    
+                }
+                pstmt.addBatch();
+            }
+
+            try {
+                // The following code will perform an INSERT on the table.
+                logger.info(" Submitting the batch request to be executed. \n");
+                // The batch is empty
+                if(recordList.size() <= 1 ) {
+                	logger.info("Empty table. No Record in table: " + table.getName());
+                	return;
+                }
+                // Submit a batch request, returning update counts
+                int[] updateCount = pstmt.executeBatch();
+                logger.info("updateCount: " + updateCount.length + 
+                		" on Table: " + table.getName());
+            }
+            catch (BatchUpdateException ex) {
+                logger.info(" Exception thrown " + 
+                		ex.getErrorCode() + ":" + ex.getMessage() + "\n");
+                logger.warn(ex.getMessage());
+                
+            }
+        }
+        finally {
+            // Close the statement
+            pstmt.close();
+            logger.info("\n PreparedStatement object closed.\n");
+        }
+    }
+    
 }
 
